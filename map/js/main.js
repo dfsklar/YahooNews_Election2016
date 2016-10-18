@@ -2,9 +2,9 @@ jQuery(document).ready(function($){
 	var timelines = $('.cd-horizontal-timeline'),
 
     // SKLARDFSKLAR: Change this to enforce a min distance between components
-		eventsMinDistance = 120;
+		eventsMinDistance = 110;
 
-    forcedLeftSubtract = -200;
+    forcedLeftSubtract = -208;
 
 	  (timelines.length > 0) && initTimeline(timelines);
 
