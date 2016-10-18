@@ -100,6 +100,13 @@ Main Components
     -webkit-transition: -webkit-transform 0.3s;
     -moz-transition: -moz-transform 0.3s;
     transition: transform 0.3s; }
+  .cd-horizontal-timeline .timeline-event-marker .who {
+    margin-top: 9px;
+    font-size: 118%; }
+  .cd-horizontal-timeline .timeline-event-marker .what {
+    font-style: italic; }
+  .cd-horizontal-timeline .timeline-event-marker .date {
+    margin-top: 6px; }
   .cd-horizontal-timeline .timeline-event-marker img {
     width: 36px; }
   .cd-horizontal-timeline .events a {
