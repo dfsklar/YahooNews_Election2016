@@ -20,6 +20,10 @@ html {
 	font-size: 62.5%;
 }
 
+p {
+  margin-top: 10px !important;
+}
+
 body {
 	font: {
 		size: 1.6rem;
@@ -287,7 +291,7 @@ Main Components
 	
 	li > * {
 		max-width: 800px;
-		margin: 0 auto;
+		/* margin: 0 auto; DFSKLARD CANCEL */
 	}
 
 	h2 {

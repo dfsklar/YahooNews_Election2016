@@ -9,6 +9,9 @@ Primary style
 html {
   font-size: 62.5%; }
 
+p {
+  margin-top: 10px !important; }
+
 body {
   font-size: 1.6rem;
   font-family: "Fira Sans", sans-serif;
@@ -270,7 +273,7 @@ Main Components
       animation-direction: reverse; }
   .cd-horizontal-timeline .events-content li > * {
     max-width: 800px;
-    margin: 0 auto; }
+    /* margin: 0 auto; DFSKLARD CANCEL */ }
   .cd-horizontal-timeline .events-content h2 {
     font-weight: bold;
     font-size: 2.6rem;
