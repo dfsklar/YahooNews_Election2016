@@ -1,12 +1,13 @@
 jQuery(document).ready(function($){
-	var timelines = $('.cd-horizontal-timeline'),
+	var timelines = $('.cd-horizontal-timeline');
 
     // SKLARDFSKLAR: Change this to enforce a min distance between components
-		eventsMinDistance = 110;
+	var eventsMinDistance = 110;
+	var eventsMaxDistance = 200;
 
-    forcedLeftSubtract = -208;
+    var forcedLeftSubtract = -208;
 
-	  (timelines.length > 0) && initTimeline(timelines);
+	(timelines.length > 0) && initTimeline(timelines);
 
 	function initTimeline(timelines) {
 		timelines.each(function(){
@@ -32,14 +33,20 @@ jQuery(document).ready(function($){
 			//detect click on the next arrow
 			timelineComponents['timelineNavigation'].on('click', '.next', function(event){
 				event.preventDefault();
-				updateSlide(timelineComponents, timelineTotWidth, 'next');
+                // DFSKLARD: I want this to move to next story unconditionally, not just slide the timeline bar
+				showNewContent(timelineComponents, timelineTotWidth, 'next');
+				//updateSlide(timelineComponents, timelineTotWidth, 'next');
 			});
+
 			//detect click on the prev arrow
 			timelineComponents['timelineNavigation'].on('click', '.prev', function(event){
 				event.preventDefault();
-				updateSlide(timelineComponents, timelineTotWidth, 'prev');
+                // DFSKLARD: I want this to move to prev story unconditionally, not just slide the timeline bar
+				showNewContent(timelineComponents, timelineTotWidth, 'prev');
+				// updateSlide(timelineComponents, timelineTotWidth, 'prev');
 			});
-			//detect click on the a single event - show new event content
+            
+			//detect click on a single event - show new event content
 			timelineComponents['eventsWrapper'].on('click', 'a', function(event){
 				event.preventDefault();
 				timelineComponents['timelineEvents'].removeClass('selected');
@@ -70,6 +77,8 @@ jQuery(document).ready(function($){
 		});
 	}
 
+
+    
 	function updateSlide(timelineComponents, timelineTotWidth, string) {
 		//retrieve translateX value of timelineComponents['eventsWrapper']
 		var translateValue = getTranslateValue(timelineComponents['eventsWrapper']),
@@ -80,6 +89,9 @@ jQuery(document).ready(function($){
 			: translateTimeline(timelineComponents, translateValue + wrapperWidth - eventsMinDistance);
 	}
 
+
+
+    
 	function showNewContent(timelineComponents, timelineTotWidth, string) {
 		//go from one event to the next/previous one
 		var visibleContent =  timelineComponents['eventsContent'].find('.selected'),
@@ -133,14 +145,29 @@ jQuery(document).ready(function($){
 
 
 
-	  function setDatePosition(timelineComponents, min) {
-		    for (i = 0; i < timelineComponents['timelineDates'].length; i++) { 
-		        var distance = daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][i]),
-		    	      distanceNorm = Math.round(distance/timelineComponents['eventsMinLapse']) + 2;
+	function setDatePosition(timelineComponents, min) {
+        var num_events = timelineComponents['timelineDates'].length;
+        var raw_left_vals = [];
+		for (i = 0; i < num_events; i++) { 
+		    var distance = daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][i]),
+		    	distanceNorm = Math.round(distance/timelineComponents['eventsMinLapse']) + 2;
             var final = (distanceNorm*min) + forcedLeftSubtract;
-		        timelineComponents['timelineEvents'].eq(i).css('left', final+'px');
-		    }
-	  }
+            raw_left_vals.push(final);
+		}
+
+        // Now we want to re-process all coordinates to move closer together any successive
+        // events whose dist-between exceeds a given max.
+        var prev_raw_left = 0;
+        var prev_good_left = 0;
+		for (i = 0; i < num_events; i++) {
+            var cur_raw_left = raw_left_vals[i];
+            var delta = Math.min(cur_raw_left-prev_raw_left, eventsMaxDistance);
+            var cur_good_left = prev_good_left + delta;
+		    timelineComponents['timelineEvents'].eq(i).css('left', cur_good_left+'px');
+            prev_raw_left = cur_raw_left;
+            prev_good_left = cur_good_left;
+        }
+	}
 
 
 
@@ -152,7 +179,7 @@ jQuery(document).ready(function($){
 		timelineComponents['eventsWrapper'].css('width', totalWidth+'px');
 		updateFilling(timelineComponents['eventsWrapper'].find('a.selected'), timelineComponents['fillingLine'], totalWidth);
 		updateTimelinePosition('next', timelineComponents['eventsWrapper'].find('a.selected'), timelineComponents);
-	
+	    
 		return totalWidth;
 	}
 
@@ -185,10 +212,10 @@ jQuery(document).ready(function($){
 	function getTranslateValue(timeline) {
 		var timelineStyle = window.getComputedStyle(timeline.get(0), null),
 			timelineTranslate = timelineStyle.getPropertyValue("-webkit-transform") ||
-         		timelineStyle.getPropertyValue("-moz-transform") ||
-         		timelineStyle.getPropertyValue("-ms-transform") ||
-         		timelineStyle.getPropertyValue("-o-transform") ||
-         		timelineStyle.getPropertyValue("transform");
+         	timelineStyle.getPropertyValue("-moz-transform") ||
+         	timelineStyle.getPropertyValue("-ms-transform") ||
+         	timelineStyle.getPropertyValue("-o-transform") ||
+         	timelineStyle.getPropertyValue("transform");
 
         if( timelineTranslate.indexOf('(') >=0 ) {
         	var timelineTranslate = timelineTranslate.split('(')[1];
@@ -247,8 +274,8 @@ jQuery(document).ready(function($){
 	}
 
 	/*
-		How to tell if a DOM element is visible in the current viewport?
-		http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
+	  How to tell if a DOM element is visible in the current viewport?
+	  http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
 	*/
 	function elementInViewport(el) {
 		var top = el.offsetTop;
@@ -264,9 +291,9 @@ jQuery(document).ready(function($){
 
 		return (
 		    top < (window.pageYOffset + window.innerHeight) &&
-		    left < (window.pageXOffset + window.innerWidth) &&
-		    (top + height) > window.pageYOffset &&
-		    (left + width) > window.pageXOffset
+		        left < (window.pageXOffset + window.innerWidth) &&
+		        (top + height) > window.pageYOffset &&
+		        (left + width) > window.pageXOffset
 		);
 	}
 
