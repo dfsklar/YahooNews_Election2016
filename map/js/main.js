@@ -1,8 +1,12 @@
 jQuery(document).ready(function($){
 	var timelines = $('.cd-horizontal-timeline'),
-		eventsMinDistance = 60;
 
-	(timelines.length > 0) && initTimeline(timelines);
+    // SKLARDFSKLAR: Change this to enforce a min distance between components
+		eventsMinDistance = 120;
+
+    forcedLeftSubtract = -200;
+
+	  (timelines.length > 0) && initTimeline(timelines);
 
 	function initTimeline(timelines) {
 		timelines.each(function(){
@@ -127,13 +131,18 @@ jQuery(document).ready(function($){
 		setTransformValue(filling.get(0), 'scaleX', scaleValue);
 	}
 
-	function setDatePosition(timelineComponents, min) {
-		for (i = 0; i < timelineComponents['timelineDates'].length; i++) { 
-		    var distance = daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][i]),
-		    	distanceNorm = Math.round(distance/timelineComponents['eventsMinLapse']) + 2;
-		    timelineComponents['timelineEvents'].eq(i).css('left', distanceNorm*min+'px');
-		}
-	}
+
+
+	  function setDatePosition(timelineComponents, min) {
+		    for (i = 0; i < timelineComponents['timelineDates'].length; i++) { 
+		        var distance = daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][i]),
+		    	      distanceNorm = Math.round(distance/timelineComponents['eventsMinLapse']) + 2;
+            var final = (distanceNorm*min) + forcedLeftSubtract;
+		        timelineComponents['timelineEvents'].eq(i).css('left', final+'px');
+		    }
+	  }
+
+
 
 	function setTimelineWidth(timelineComponents, width) {
 		var timeSpan = daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][timelineComponents['timelineDates'].length-1]),
