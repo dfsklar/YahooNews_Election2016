@@ -1,3 +1,19 @@
+function getAppVersion() {
+        appname= navigator.appName;
+        appversion = navigator.appVersion;
+        majorver = appversion.substring(0, 1);
+        if ( (appname == "Netscape") && ( majorver >= 3 ) ) return 1;
+        if ( (appname == "Microsoft Internet Explorer") && (majorver >= 4) ) return 1;
+        return 0;
+}
+
+function swtch(num, this_anchor) {
+    if (getAppVersion()) {
+        this_anchor.firstChild.src = img[num].src;
+    }
+}
+
+
 jQuery(document).ready(function($){
     imgsrc = new Array();
     imgsrc[0] = "images/people_alexandra_chalupa_a.jpg";
@@ -95,20 +111,6 @@ jQuery(document).ready(function($){
         $('#showcase').html(innerContents).addClass('showcase-visible');
     }
 
-    function getAppVersion() {
-        appname= navigator.appName;
-        appversion = navigator.appVersion;
-        majorver = appversion.substring(0, 1);
-        if ( (appname == "Netscape") && ( majorver >= 3 ) ) return 1;
-        if ( (appname == "Microsoft Internet Explorer") && (majorver >= 4) ) return 1;
-        return 0;
-    }
-
-    function swtch(num, imgname) {
-        if (getAppVersion()) {
-            document[imgname].src = img[num].src;
-        }
-    }
 
 
     if (getAppVersion()) {
