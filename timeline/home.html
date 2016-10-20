@@ -15,21 +15,38 @@
 <body>
 <section class="cd-horizontal-timeline">
 	<div class="timeline">
-		<div class="events-wrapper">
+    <div class="events-wrapper">
+
+      
 			<div class="events">
 				<ol>
-					<li><a href="#0" data-date="15/05/2015" class="selected">
+
+
+
+          <LI><a href="#0" data-date="14/05/2015" class='selected ignoreme'>
+              <div class='timeline-event-marker'>
+                <div class=who></div>
+                <div class=what></div>
+                <div class='date'></div>
+          </div></a></LI>
+
+
+      <!-- GORDON: Place each event on the timeline using one LI
+                  element looking like this.  Note the dates must be
+                  dd/mm/yyyy -->
+          <LI><a href="#0" data-date="15/05/2015">
               <div class='timeline-event-marker'>
                 <img src='news_images/timeline_bush.jpg'/>
                 <div class=who>Jeb Bush</div>
                 <div class=what>Iraq War<br/>&nbsp;</div>
                 <div class='date'>May 2015</div>
-          </div></a></li>
+          </div></a></LI>
 
+          
 					<li><a href="#0" data-date="16/06/2015">
               <div class='timeline-event-marker'>
                 <img src='news_images/timeline_trump_mexican.jpg'/>
-                <div class=who>Donald Trump</div>
+                <div class=who>Trump</div>
                 <div class=what>Mexicans/<br/>Rapists</div>
                 <div class='date'>June 2015</div>
           </div></a></li>
@@ -37,7 +54,7 @@
 					<li><a href="#0" data-date="18/07/2015">
               <div class='timeline-event-marker'>
                 <img src='news_images/timeline_trump_mccain.jpg'/>
-                <div class=who>Donald Trump</div>
+                <div class=who>Trump</div>
                 <div class=what>No war<br/>hero...</div>
                 <div class='date'>July 2015</div>
           </div></a></li>
@@ -45,7 +62,7 @@
 					<li><a href="#0" data-date="07/08/2015">
               <div class='timeline-event-marker'>
                 <img src='news_images/timeline_trump_blood.jpg'/>
-                <div class=who>Donald Trump</div>
+                <div class=who>Trump</div>
                 <div class=what>Blood coming<br/>outta her...</div>
                 <div class='date'>August 2015</div>
           </div></a></li>
@@ -54,8 +71,8 @@
 					<li><a href="#0" data-date="13/10/2015">
               <div class='timeline-event-marker'>
                 <img src='news_images/timeline_trump_blood.jpg'/>
-                <div class=who>Bernie Sanders</div>
-                <div class=what>Damn emails!<br/>&nbsp;</div>
+                <div class=who>Bernie</div>
+                <div class=what>"Damn emails!"<br/>&nbsp;</div>
                 <div class='date'>October 2015</div>
           </div></a></li>
 
@@ -63,8 +80,8 @@
 					<li><a href="#0" data-date="14/10/2015">
               <div class='timeline-event-marker'>
                 <img src='news_images/timeline_trump_rallies.jpg'/>
-                <div class=who>Violence erupts</div>
-                <div class=what>at Trump rallies<br/>&nbsp;</div>
+                <div class=who>Trump</div>
+                <div class=what>Violence at rallies<br/>&nbsp;</div>
                 <div class='date'>October 2015</div>
           </div></a></li>
 
@@ -72,7 +89,7 @@
               <div class='timeline-event-marker'>
                 <img src='news_images/timeline_biden.jpg'/>
                 <div class=who>Joe Biden</div>
-                <div class=what>not running<br/>&nbsp;</div>
+                <div class=what>Not running<br/>&nbsp;</div>
                 <div class='date'>October 2015</div>
           </div></a></li>
 
@@ -87,17 +104,57 @@
 			<li><a href="#0" class="next">Next</a></li>
 		</ul> <!-- .cd-timeline-navigation -->
 	</div> <!-- .timeline -->
- 
+
+
+
+    
 	<div class="events-content">
 		<ol>
-			<li class="selected" data-date="15/05/2015">
+
+
+
+          <LI class="selected invisible" data-date="14/05/2015">
+                <!-- HEADLINE: -->
+				<h2></h2>
+                <!-- DATE -->
+                <em></em>
+				<p>	
+					This is the prose that will appear when the
+                    timeline page is first loaded.
+				</p>
+				<p>	
+					This is the prose that will appear when the
+                    timeline page is first loaded.
+				</p>
+				<p>	
+					This is the prose that will appear when the
+                    timeline page is first loaded.
+				</p>
+				<p>	
+					This is the prose that will appear when the
+                    timeline page is first loaded.
+				</p>
+         </LI>
+
+
+
+          <!-- GORDON: Provide the prose for each event using an LI
+                  element looking like this.  However, leave out the
+                  class=selected for all-but-the-first. -->
+          <LI  data-date="15/05/2015">
+                <!-- HEADLINE: -->
 				<h2>Jeb Bush</h2>
-				<em>May 15, 2015</em>
+                <!-- DATE -->
+                <em>May 15, 2015</em>
+                <!-- A series of paragraphs -->    
 				<p>	
 					Iraq War lorem ipsum dolor sit amet.....
 				</p>
-			</li>
- 
+         </LI>
+
+
+
+
 			<li data-date="16/06/2015">
 				<!-- event description here -->
 				<h2>Donald Trump and the Mexican Rapists</h2>
@@ -106,7 +163,9 @@
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
 				</p>
 			</li>
- 
+
+
+
 			<li data-date="18/07/2015">
 				<!-- event description here -->
 				<h2>McCain not a war hero</h2>
@@ -133,6 +192,8 @@ As of early October, the verdict was in: Trump was leading Clinton among veteran
 			</li>
 
 
+
+
             			<li   data-date="07/08/2015">
 				<h2>Horizontal Timeline</h2>
 				<em>January 16th, 2014</em>
@@ -140,6 +201,9 @@ As of early October, the verdict was in: Trump was leading Clinton among veteran
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
 				</p>
 			</li>
+
+
+
 
             			<li   data-date="13/10/2015">
 				<h2>Horizontal Timeline</h2>
@@ -149,7 +213,10 @@ As of early October, the verdict was in: Trump was leading Clinton among veteran
 				</p>
 			</li>
 
-            			<li   data-date="14/10/2015">
+
+
+
+            <li   data-date="14/10/2015">
 				<h2>Horizontal Timeline</h2>
 				<em>January 16th, 2014</em>
 				<p>	
@@ -158,7 +225,11 @@ As of early October, the verdict was in: Trump was leading Clinton among veteran
 			</li>
 
 
-            			<li   data-date="21/10/2015">
+
+
+
+
+      			<li   data-date="21/10/2015">
 				<h2>Horizontal Timeline</h2>
 				<em>January 16th, 2014</em>
 				<p>	

@@ -5,7 +5,7 @@ jQuery(document).ready(function($){
 	var eventsMinDistance = 110;
 	var eventsMaxDistance = 200;
 
-    var forcedLeftSubtract = -208;
+    var forcedLeftSubtract = -288;
 
 	(timelines.length > 0) && initTimeline(timelines);
 
