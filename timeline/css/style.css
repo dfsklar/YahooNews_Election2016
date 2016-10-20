@@ -277,7 +277,7 @@ Main Components
     line-height: 1.6; }
   @media only screen and (min-width: 768px) {
     .cd-horizontal-timeline .events-content h2 {
-      font-size: 7rem; }
+      font-size: 5rem; }
     .cd-horizontal-timeline .events-content em {
       font-size: 2rem; }
     .cd-horizontal-timeline .events-content p {
