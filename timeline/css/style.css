@@ -195,10 +195,13 @@ Main Components
     height: 16px;
     width: 16px; }
   .cd-timeline-navigation a.prev {
-    left: 0;
     font-size: 18px;
+    padding-right: 3px;
     padding-top: 7px; }
   .cd-timeline-navigation a.next {
+    font-size: 18px;
+    padding-left: 3px;
+    padding-top: 7px;
     right: 0; }
   .no-touch .cd-timeline-navigation a:hover {
     border-color: #0079f2; }

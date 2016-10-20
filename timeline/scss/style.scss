@@ -232,12 +232,15 @@ Main Components
 	}
 
 	&.prev {
-		left: 0;
         font-size: 18px;
+        padding-right: 3px;
         padding-top: 7px;
 	}
 
 	&.next {
+        font-size: 18px;
+        padding-left: 3px;
+        padding-top: 7px;
 		right: 0;
 	}
 
