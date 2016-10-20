@@ -2,10 +2,9 @@ jQuery(document).ready(function($){
 	var timelines = $('.cd-horizontal-timeline');
 
     // SKLARDFSKLAR: Change this to enforce a min distance between components
-	var eventsMinDistance = 110;
-	var eventsMaxDistance = 200;
-
-    var forcedLeftSubtract = -288;
+	var eventsMinDistance = 118;
+	var eventsMaxDistance = 180;
+    var forcedLeftSubtract = -300;
 
 	(timelines.length > 0) && initTimeline(timelines);
 
@@ -56,7 +55,9 @@ jQuery(document).ready(function($){
 				updateVisibleContent($(this), timelineComponents['eventsContent']);
 			});
 
-			//on swipe, show next/prev event content
+
+			//ON SWIPE, SHOW NEXT/PREV EVENT CONTENT
+            /*  *** DISABLED ***
 			timelineComponents['eventsContent'].on('swipeleft', function(){
 				var mq = checkMQ();
 				( mq == 'mobile' ) && showNewContent(timelineComponents, timelineTotWidth, 'next');
@@ -65,6 +66,7 @@ jQuery(document).ready(function($){
 				var mq = checkMQ();
 				( mq == 'mobile' ) && showNewContent(timelineComponents, timelineTotWidth, 'prev');
 			});
+            */
 
 			//keyboard navigation
 			$(document).keyup(function(event){
@@ -110,6 +112,8 @@ jQuery(document).ready(function($){
 		}
 	}
 
+
+
 	function updateTimelinePosition(string, event, timelineComponents) {
 		//translate timeline to the left/right according to the position of the selected event
 		var eventStyle = window.getComputedStyle(event.get(0), null),
@@ -118,10 +122,18 @@ jQuery(document).ready(function($){
 			timelineTotWidth = Number(timelineComponents['eventsWrapper'].css('width').replace('px', ''));
 		var timelineTranslate = getTranslateValue(timelineComponents['eventsWrapper']);
 
-        if( (string == 'next' && eventLeft > timelineWidth - timelineTranslate) || (string == 'prev' && eventLeft < - timelineTranslate) ) {
+        // DFSKLARD: this does not force scrolling if even a tiny portion of the target obj is visible,
+        // but I want to ensure *most* of the target obj is visible.
+        var sensitivity = 58;
+
+        if( (string == 'next' && (eventLeft+sensitivity) > (timelineWidth - timelineTranslate)) || 
+            (string == 'prev' && (eventLeft < - timelineTranslate)) ) {
         	translateTimeline(timelineComponents, - eventLeft + timelineWidth/2, timelineWidth - timelineTotWidth);
         }
 	}
+
+
+
 
 	function translateTimeline(timelineComponents, value, totWidth) {
 		var eventsWrapper = timelineComponents['eventsWrapper'].get(0);
