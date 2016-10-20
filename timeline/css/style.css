@@ -341,5 +341,9 @@ Main Components
     -ms-transform: translateX(0%);
     -o-transform: translateX(0%);
     transform: translateX(0%); } }
+.video-holder {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  text-align: center; }
 
 /*# sourceMappingURL=style.css.map */
