@@ -60,14 +60,51 @@ Main Components
 		opacity: 1;
 	}
 
+
+
+  /* DFSKLARD plays with all of this */
+  .timeline-event-marker {
+    .who {
+      margin-top: 9px;
+      font-size: 130%;
+      margin-bottom: 3px;
+    }
+    .what {
+      font-style: italic;
+      font-size: 110%;
+    }
+    .date {
+      margin-top: 6px;
+    }
+    img {
+      height: 45px;
+    }                         
+  } 
+
+
+
 	.timeline {
 		position: relative;
     /* SKLARDFSKLAR plays with following: */
-		height: 140px;
+		height: 180px;
 		width: 90%;
 		max-width: 800px;
 		margin: 0 auto;
 	}
+
+	.events {
+		/* this is the grey line/timeline */
+		position: absolute;
+		z-index: 1;
+		left: 0;
+    /* SKLARDFSKLAR plays with: */
+		top: 150px;
+		height: 2px;
+		/* width will be set using JavaScript */
+		background: darken($color-4, 10%);
+		@include transition(transform .4s);
+	}
+
 
 	.events-wrapper {
 		position: relative;
@@ -100,19 +137,6 @@ Main Components
     font-weight: bold;
   }
 
-	.events {
-		/* this is the grey line/timeline */
-		position: absolute;
-		z-index: 1;
-		left: 0;
-    /* SKLARDFSKLAR plays with: */
-		top: 120px;
-		height: 2px;
-		/* width will be set using JavaScript */
-		background: darken($color-4, 10%);
-		@include transition(transform .4s);
-	}
-
 	.filling-line {
 		/* this is used to create the green line filling the timeline */
 		position: absolute;
@@ -127,21 +151,10 @@ Main Components
 		@include transition(transform .3s);
 	}
 
-  .timeline-event-marker {
-    .who {
-      margin-top: 9px;
-      font-size: 118%;
-    }
-    .what {
-      font-style: italic;
-    }
-    .date {
-      margin-top: 6px;
-    }
-    img {
-      height: 38px;
-    }                         
-  } 
+
+
+
+
 
 	.events a {
 		position: absolute;

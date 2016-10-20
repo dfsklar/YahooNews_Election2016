@@ -32,7 +32,8 @@ Main Components
   margin: 2em auto;
   -webkit-transition: opacity 0.2s;
   -moz-transition: opacity 0.2s;
-  transition: opacity 0.2s; }
+  transition: opacity 0.2s;
+  /* DFSKLARD plays with all of this */ }
   .cd-horizontal-timeline::before {
     /* never visible - this is used in jQuery to check the current MQ */
     content: 'mobile';
@@ -40,13 +41,37 @@ Main Components
   .cd-horizontal-timeline.loaded {
     /* show the timeline after events position has been set (using JavaScript) */
     opacity: 1; }
+  .cd-horizontal-timeline .timeline-event-marker .who {
+    margin-top: 9px;
+    font-size: 130%;
+    margin-bottom: 3px; }
+  .cd-horizontal-timeline .timeline-event-marker .what {
+    font-style: italic;
+    font-size: 110%; }
+  .cd-horizontal-timeline .timeline-event-marker .date {
+    margin-top: 6px; }
+  .cd-horizontal-timeline .timeline-event-marker img {
+    height: 45px; }
   .cd-horizontal-timeline .timeline {
     position: relative;
     /* SKLARDFSKLAR plays with following: */
-    height: 140px;
+    height: 180px;
     width: 90%;
     max-width: 800px;
     margin: 0 auto; }
+  .cd-horizontal-timeline .events {
+    /* this is the grey line/timeline */
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    /* SKLARDFSKLAR plays with: */
+    top: 150px;
+    height: 2px;
+    /* width will be set using JavaScript */
+    background: #dfdfdf;
+    -webkit-transition: -webkit-transform 0.4s;
+    -moz-transition: -moz-transform 0.4s;
+    transition: transform 0.4s; }
   .cd-horizontal-timeline .events-wrapper {
     position: relative;
     height: 100%;
@@ -70,19 +95,6 @@ Main Components
       background-image: linear-gradient(to left, #f8f8f8, rgba(248, 248, 248, 0)); }
   .cd-horizontal-timeline .who {
     font-weight: bold; }
-  .cd-horizontal-timeline .events {
-    /* this is the grey line/timeline */
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    /* SKLARDFSKLAR plays with: */
-    top: 120px;
-    height: 2px;
-    /* width will be set using JavaScript */
-    background: #dfdfdf;
-    -webkit-transition: -webkit-transform 0.4s;
-    -moz-transition: -moz-transform 0.4s;
-    transition: transform 0.4s; }
   .cd-horizontal-timeline .filling-line {
     /* this is used to create the green line filling the timeline */
     position: absolute;
@@ -105,15 +117,6 @@ Main Components
     -webkit-transition: -webkit-transform 0.3s;
     -moz-transition: -moz-transform 0.3s;
     transition: transform 0.3s; }
-  .cd-horizontal-timeline .timeline-event-marker .who {
-    margin-top: 9px;
-    font-size: 118%; }
-  .cd-horizontal-timeline .timeline-event-marker .what {
-    font-style: italic; }
-  .cd-horizontal-timeline .timeline-event-marker .date {
-    margin-top: 6px; }
-  .cd-horizontal-timeline .timeline-event-marker img {
-    height: 38px; }
   .cd-horizontal-timeline .events a {
     position: absolute;
     bottom: 0;
