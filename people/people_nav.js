@@ -61,17 +61,23 @@ jQuery(document).ready(function($){
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    var highlight_this_person = getParameterByName('highlight');
-    if (highlight_this_person) {
-        for (i = 0; i < imgsrc.length; i++) {
-            if (imgsrc[i].indexOf(highlight_this_person) >= 0) {
-                imgsrc[i] = imgsrc[i].replace('_a.jpg', '_c.jpg');
-                imgsrc[i] = imgsrc[i].replace('_b.jpg', '_c.jpg');
-                $('#'+highlight_this_person).find('img').attr('src', imgsrc[i]);
+
+    function highlightPerson(attr) {
+        var highlight_this_person = getParameterByName(attr);
+        if (highlight_this_person) {
+            for (i = 0; i < imgsrc.length; i++) {
+                if (imgsrc[i].indexOf(highlight_this_person) >= 0) {
+                    imgsrc[i] = imgsrc[i].replace('_a.jpg', '_c.jpg');
+                    imgsrc[i] = imgsrc[i].replace('_b.jpg', '_c.jpg');
+                    $('#'+highlight_this_person).find('img').attr('src', imgsrc[i]);
+                }
             }
         }
     }
 
+    highlightPerson('highlight');
+    highlightPerson('highlight1');
+    highlightPerson('highlight2');
 
     img = new Array();
 
@@ -81,36 +87,6 @@ jQuery(document).ready(function($){
             img[i].src = imgsrc[i];
         }
     }
-
-    panelSrc = new Array();
-    panelSrc[50] = "gordondonovan.com/?p=11238";
-    panelSrc[51] = "gordondonovan.com/?p=11238";
-    panelSrc[52] = "gordondonovan.com/?p=11238";
-    panelSrc[53] = "gordondonovan.com/?p=11238";
-    panelSrc[54] = "gordondonovan.com/?p=11238";
-    panelSrc[55] = "gordondonovan.com/?p=11238";
-    panelSrc[56] = "#";
-    panelSrc[57] = "http://gordondonovan.com/?cat=299";
-    panelSrc[58] = "http://gordondonovan.com/?cat=299";
-    panelSrc[59] = "http://gordondonovan.com/?cat=299";
-    panelSrc[60] = "http://gordondonovan.com/?cat=299";
-    panelSrc[61] = "http://gordondonovan.com/?cat=299";
-    panelSrc[62] = "http://gordondonovan.com/?cat=299";
-    panelSrc[63] = "http://gordondonovan.com/?cat=299";
-    panelSrc[64] = "http://gordondonovan.com/?cat=299";
-    panelSrc[65] = "http://gordondonovan.com/?cat=299";
-
-
-    function doSomeStuff(whatVal)  {
-        // parent.frametop.location = panelSrc[whatVal];
-        var blurbToShow =$('#candidate-blurb-'+whatVal);
-        var innerContents = blurbToShow.html();
-        if (!innerContents) {
-            innerContents = "<p><i>(Sorry we have no info about that candidate.)</i></p>";
-        }
-        $('#showcase').html(innerContents).addClass('showcase-visible');
-    }
-
 
 
     if (getAppVersion()) {
