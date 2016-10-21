@@ -8,6 +8,17 @@ jQuery(document).ready(function($){
 
 	(timelines.length > 0) && initTimeline(timelines);
 
+
+    function stopAllVideos() {
+        $('iframe').each(function() {
+            var origSrc = $(this).attr('src');
+            if (origSrc.indexOf('news.yahoo.com/video') > 0) {
+                console.log("Autostop on video: " + origSrc);
+                $(this).attr('src', origSrc);
+            }
+        });
+    }
+
 	function initTimeline(timelines) {
 		timelines.each(function(){
 			var timeline = $(this),
@@ -95,6 +106,7 @@ jQuery(document).ready(function($){
 
     
 	function showNewContent(timelineComponents, timelineTotWidth, string) {
+        stopAllVideos();
 		//go from one event to the next/previous one
 		var visibleContent =  timelineComponents['eventsContent'].find('.selected'),
 			newContent = ( string == 'next' ) ? visibleContent.next() : visibleContent.prev();
