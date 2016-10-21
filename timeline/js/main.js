@@ -10,13 +10,12 @@ jQuery(document).ready(function($){
 
 
     function stopAllVideos($root) {
+        console.log($root);
         // Easy way to stop a video is to simply reload the SRC attribute of the iframe.
         $root.find('iframe').each(function() {
             var origSrc = $(this).attr('src');
-            if (origSrc.indexOf('news.yahoo.com/video') > 0) {
-                console.log("Autostop on video: " + origSrc);
-                $(this).attr('src', origSrc);
-            }
+            // console.log("Autostop on video: " + origSrc);
+            $(this).attr('src', origSrc);
         });
     }
 
