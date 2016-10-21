@@ -9,8 +9,9 @@ jQuery(document).ready(function($){
 	(timelines.length > 0) && initTimeline(timelines);
 
 
-    function stopAllVideos() {
-        $('iframe').each(function() {
+    function stopAllVideos($root) {
+        // Easy way to stop a video is to simply reload the SRC attribute of the iframe.
+        $root.find('iframe').each(function() {
             var origSrc = $(this).attr('src');
             if (origSrc.indexOf('news.yahoo.com/video') > 0) {
                 console.log("Autostop on video: " + origSrc);
@@ -106,12 +107,12 @@ jQuery(document).ready(function($){
 
     
 	function showNewContent(timelineComponents, timelineTotWidth, string) {
-        stopAllVideos();
 		//go from one event to the next/previous one
 		var visibleContent =  timelineComponents['eventsContent'].find('.selected'),
 			newContent = ( string == 'next' ) ? visibleContent.next() : visibleContent.prev();
 
 		if ( newContent.length > 0 ) { //if there's a next/prev event - show it
+            stopAllVideos($(visibleContent));
 			var selectedDate = timelineComponents['eventsWrapper'].find('.selected'),
 				newEvent = ( string == 'next' ) ? selectedDate.parent('li').next('li').children('a') : selectedDate.parent('li').prev('li').children('a');
 			
