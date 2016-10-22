@@ -279,6 +279,11 @@ Main Components
   .cd-horizontal-timeline .events-content p {
     font-size: 1.4rem;
     color: #26282A; }
+  .cd-horizontal-timeline .events-content h5 {
+    font-size: 1.4rem;
+    margin-top: 19px !important;
+    color: #0066CC;
+    font-weight: bold; }
   .cd-horizontal-timeline .events-content em, .cd-horizontal-timeline .events-content p {
     line-height: 1.6; }
   @media only screen and (min-width: 768px) {
