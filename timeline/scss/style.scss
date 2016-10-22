@@ -30,7 +30,7 @@ body {
 		family: $primary-font; // variables inside partials > _variables.scss
 	}
 	color: $color-1;
-	background-color: $color-4;
+	background-color: #ffffff;
 }
 
 a {
@@ -326,7 +326,7 @@ Main Components
 
 	p {
 		font-size: 1.4rem;
-		color: shade($color-4, 40%);
+		color: #26282A;
 	}
 
 	em, p {

@@ -16,7 +16,7 @@ body {
   font-size: 1.6rem;
   font-family: "Helvetica Neue", "Arial", sans-serif;
   color: #383838;
-  background-color: #f8f8f8; }
+  background-color: #ffffff; }
 
 a {
   color: #0079f2;
@@ -68,7 +68,7 @@ Main Components
     top: 150px;
     height: 2px;
     /* width will be set using JavaScript */
-    background: #dfdfdf;
+    background: #e6e6e6;
     -webkit-transition: -webkit-transform 0.4s;
     -moz-transition: -moz-transform 0.4s;
     transition: transform 0.4s; }
@@ -87,12 +87,12 @@ Main Components
       width: 20px; }
     .cd-horizontal-timeline .events-wrapper::before {
       left: 0;
-      background-image: -webkit-linear-gradient( left , #f8f8f8, rgba(248, 248, 248, 0));
-      background-image: linear-gradient(to right, #f8f8f8, rgba(248, 248, 248, 0)); }
+      background-image: -webkit-linear-gradient( left , #ffffff, rgba(255, 255, 255, 0));
+      background-image: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0)); }
     .cd-horizontal-timeline .events-wrapper::after {
       right: 0;
-      background-image: -webkit-linear-gradient( right , #f8f8f8, rgba(248, 248, 248, 0));
-      background-image: linear-gradient(to left, #f8f8f8, rgba(248, 248, 248, 0)); }
+      background-image: -webkit-linear-gradient( right , #ffffff, rgba(255, 255, 255, 0));
+      background-image: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0)); }
   .cd-horizontal-timeline .who {
     font-weight: bold; }
   .cd-horizontal-timeline .filling-line {
@@ -146,8 +146,8 @@ Main Components
       height: 12px;
       width: 12px;
       border-radius: 50%;
-      border: 2px solid #dfdfdf;
-      background-color: #f8f8f8;
+      border: 2px solid #e6e6e6;
+      background-color: #ffffff;
       -webkit-transition: background-color 0.3s, border-color 0.3s;
       -moz-transition: background-color 0.3s, border-color 0.3s;
       transition: background-color 0.3s, border-color 0.3s; }
@@ -182,7 +182,7 @@ Main Components
   height: 34px;
   width: 34px;
   border-radius: 50%;
-  border: 2px solid #dfdfdf;
+  border: 2px solid #e6e6e6;
   white-space: nowrap;
   -webkit-transition: border-color 0.3s;
   -moz-transition: border-color 0.3s;
@@ -210,7 +210,7 @@ Main Components
     .cd-timeline-navigation a.inactive::after {
       background-position: 0 -16px; }
     .no-touch .cd-timeline-navigation a.inactive:hover {
-      border-color: #dfdfdf; }
+      border-color: #e6e6e6; }
 
 .cd-horizontal-timeline .events-content {
   position: relative;
@@ -278,7 +278,7 @@ Main Components
       content: '- '; }
   .cd-horizontal-timeline .events-content p {
     font-size: 1.4rem;
-    color: #959595; }
+    color: #26282A; }
   .cd-horizontal-timeline .events-content em, .cd-horizontal-timeline .events-content p {
     line-height: 1.6; }
   @media only screen and (min-width: 768px) {
