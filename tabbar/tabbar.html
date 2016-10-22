@@ -1,0 +1,210 @@
+<html>
+<head>
+<style type='text/css'>
+#peopleplacesmoments-tabbar,
+#peopleplacesmoments-tabbar ul,
+#peopleplacesmoments-tabbar ul li,
+#peopleplacesmoments-tabbar ul li a,
+#peopleplacesmoments-tabbar #menu-button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#peopleplacesmoments-tabbar:after,
+#peopleplacesmoments-tabbar > ul:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#peopleplacesmoments-tabbar #menu-button {
+  display: none;
+}
+#peopleplacesmoments-tabbar {
+  width: auto;
+  border-radius: 4px;
+  border: 1px solid #0053a5;
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height: 1;
+  background: #0079f2;
+  background: -webkit-linear-gradient(bottom, #006cd9, #0d86ff);
+  background: -ms-linear-gradient(bottom, #006cd9, #0d86ff);
+  background: -moz-linear-gradient(bottom, #006cd9, #0d86ff);
+  background: -o-linear-gradient(bottom, #006cd9, #0d86ff);
+  background: linear-gradient(to top, #006cd9, #0d86ff);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 -2px 0px #0065c9, inset 0 1px 0 #1c8dff;
+}
+#peopleplacesmoments-tabbar > ul > li {
+  float: left;
+}
+#peopleplacesmoments-tabbar.align-center > ul {
+  font-size: 0;
+  text-align: center;
+}
+#peopleplacesmoments-tabbar.align-center > ul > li {
+  display: inline-block;
+  float: none;
+}
+#peopleplacesmoments-tabbar.align-right > ul > li {
+  float: right;
+}
+#peopleplacesmoments-tabbar > ul > li > a {
+  padding: 20px 25px 21px 25px;
+  font-size: 18px;
+  text-decoration: none;
+  color: #fcfefb;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+}
+#peopleplacesmoments-tabbar > ul > li:first-child > a {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+#peopleplacesmoments-tabbar.align-center > ul > li:first-child > a {
+  border-radius: 0;
+}
+#cssmen.align-right > ul > li:first-child > a {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+#peopleplacesmoments-tabbar > ul > li:hover > a,
+#peopleplacesmoments-tabbar > ul > li.active > a {
+  color: #13e3f7;
+}
+#peopleplacesmoments-tabbar > ul > li:hover > a,
+#peopleplacesmoments-tabbar > ul > li > a:hover {
+  background: rgba(125, 125, 125, 0.04);
+}
+#peopleplacesmoments-tabbar > ul > li:after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 0;
+  display: block;
+  height: 20px;
+  width: 1px;
+  opacity: .15;
+  background: rgba(0, 0, 0, 0.7);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0), #000, rgba(0, 0, 0, 0));
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), #000, rgba(0, 0, 0, 0));
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0), #000, rgba(0, 0, 0, 0));
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0), #000, rgba(0, 0, 0, 0));
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0), #000, rgba(0, 0, 0, 0));
+}
+#peopleplacesmoments-tabbar.align-right > ul > li:after {
+  right: auto;
+  left: -1px;
+}
+#peopleplacesmoments-tabbar > ul > li:before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: -1px;
+  display: block;
+  height: 20px;
+  width: 1px;
+  opacity: .35;
+  background: rgba(255, 255, 255, 0.8);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0), #fff, rgba(0, 0, 0, 0));
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), #fff, rgba(0, 0, 0, 0));
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0), #fff, rgba(0, 0, 0, 0));
+  background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.01), #fff, rgba(255, 255, 255, 0.01));
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0), #fff, rgba(0, 0, 0, 0));
+}
+#peopleplacesmoments-tabbar.align-right > ul > li:before {
+  right: auto;
+  left: 0px;
+}
+#peopleplacesmoments-tabbar > ul > li:last-child:after,
+#peopleplacesmoments-tabbar > ul > li:last-child:before {
+  display: none;
+}
+#peopleplacesmoments-tabbar.small-screen {
+  width: 100%;
+}
+#peopleplacesmoments-tabbar.small-screen > ul,
+#peopleplacesmoments-tabbar.small-screen.align-center > ul {
+  width: 100%;
+  text-align: left;
+}
+#peopleplacesmoments-tabbar.small-screen > ul > li,
+#peopleplacesmoments-tabbar.small-screen.align-center {
+  float: none;
+  display: block;
+  border-top: 1px solid rgba(100, 100, 100, 0.1);
+}
+#peopleplacesmoments-tabbar.small-screen > ul > li > a {
+  padding: 18px 25px;
+}
+#peopleplacesmoments-tabbar.small-screen > ul > li:after,
+#peopleplacesmoments-tabbar.small-screen > ul > li:before {
+  display: none;
+}
+#peopleplacesmoments-tabbar.small-screen #menu-button {
+  display: block;
+  padding: 18px 25px 19px 25px;
+  cursor: pointer;
+  font-size: 15px;
+  text-decoration: none;
+  color: #fcfefb;
+}
+#peopleplacesmoments-tabbar.small-screen #menu-button.menu-opened {
+  color: #13e3f7;
+}
+#peopleplacesmoments-tabbar.small-screen #menu-button:after {
+  content: "";
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  display: block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border-top: 2px solid #fcfefb;
+  border-bottom: 2px solid #fcfefb;
+  width: 18px;
+  height: 3px;
+}
+#peopleplacesmoments-tabbar.small-screen #menu-button.menu-opened:after {
+  border-top: 2px solid #13e3f7;
+  border-bottom: 2px solid #13e3f7;
+}
+#peopleplacesmoments-tabbar.small-screen #menu-button:before {
+  content: "";
+  position: absolute;
+  right: 25px;
+  top: 30px;
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: #fcfefb;
+}
+#peopleplacesmoments-tabbar.small-screen #menu-button.menu-opened:before {
+  background: #13e3f7;
+}
+</style>
+</head>
+<body>
+<div id="peopleplacesmoments-tabbar" class="select-list">
+  <ul>
+     <li class="active"><a href="#">People</a></li>
+     <li><a href="#">Places</a></li>
+     <li><a href="#">Moments</a></li>
+  </ul>
+</div>
+</body>
+</html>
