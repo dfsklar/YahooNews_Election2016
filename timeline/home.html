@@ -1212,11 +1212,14 @@ He would <a target="peopleplacesmoments_external" href="http://www.cnn.com/2015/
 <script src="https://s.yimg.com/dh/ap/politics/interactive/16_in_2016/jquery.mobile.custom.min.js"></script>
 <script>
 jQuery(document).ready(function($){
-	var timelines = $('.cd-horizontal-timeline');
+  var timelines = $('.cd-horizontal-timeline');
+
+  console.log("DFSKLAR 5:10pm"); 
+  alert           ("DFSKLAR 5:10pm"); 
 
   // SKLARDFSKLAR: Change this to enforce a min distance between components
-	var eventsMinDistance = 118;
-	var eventsMaxDistance = 180;
+  var eventsMinDistance = 118;
+  var eventsMaxDistance = 180;
   var forcedLeftSubtract = -300;
 
   var handle_resize = function() {
@@ -1224,13 +1227,14 @@ jQuery(document).ready(function($){
     if (window.devicePixelRatio) {
       ratio = window.devicePixelRatio;
     }
+    ratio = 1;  // the above really does not work on iphone
     var ww = $('body').width() * ratio;
     var sw = screen.width * ratio;
     if (sw < ww) {
        console.log(sw);
        console.log(ww);
        var $dynabody = $('.dynamic-body');
-       $dynabody.css('width', (sw-20)+'px');
+       $dynabody.css('width', (sw-15)+'px');
     }
   };
 
