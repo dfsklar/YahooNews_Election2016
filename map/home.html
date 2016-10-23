@@ -102,7 +102,15 @@
 jQuery(document).ready(function($){
 
     var handle_resize = function() {
+        console.log('map - home - Sun-654p');
+        var ww = $('body').width();
+        var sw = screen.width;
         var w = $(window).width();
+        if (sw < ww) {
+          console.log(sw);
+          console.log(ww);
+          w = sw-25;
+        }
         $('img').addClass('hidden');
         if (w >= 620) {
             $('#680').removeClass('hidden');
