@@ -1218,9 +1218,11 @@ jQuery(document).ready(function($){
     var forcedLeftSubtract = -300;
 
     var handle_resize = function() {
-       var w = $('.cd-horizontal-timeline').width();
-       console.log(w);
-       alert(w);
+       var $div = $('.canvas-body', window.parent.document);
+       alert("Diag: searching for parent canvas-body");
+       console.log($div);
+       console.log($div.length);
+       console.log($div.width());
     };
 
     handle_resize();
