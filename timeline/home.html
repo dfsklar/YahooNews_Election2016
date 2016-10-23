@@ -421,7 +421,8 @@ Main Components
 	<title>16 in 2016: The Moments</title>
 </head>
 <body>
-<section class="cd-horizontal-timeline">
+<div class='dynamic-body'>
+  <section class="cd-horizontal-timeline">
 	<div class="timeline">
     <div class="events-wrapper">
 
@@ -1204,7 +1205,8 @@ He would <a target="peopleplacesmoments_external" href="http://www.cnn.com/2015/
 
 		</ol>
 	</div> <!-- .events-content -->
-</section>
+  </section>
+</div>  <!-- .dynamic-body -->
 	
 <script src="https://s.yimg.com/dh/ap/politics/interactive/16_in_2016/jquery-2.1.4.js"></script>
 <script src="https://s.yimg.com/dh/ap/politics/interactive/16_in_2016/jquery.mobile.custom.min.js"></script>
@@ -1212,28 +1214,34 @@ He would <a target="peopleplacesmoments_external" href="http://www.cnn.com/2015/
 jQuery(document).ready(function($){
 	var timelines = $('.cd-horizontal-timeline');
 
-    // SKLARDFSKLAR: Change this to enforce a min distance between components
+  // SKLARDFSKLAR: Change this to enforce a min distance between components
 	var eventsMinDistance = 118;
 	var eventsMaxDistance = 180;
-    var forcedLeftSubtract = -300;
+  var forcedLeftSubtract = -300;
 
-    var handle_resize = function() {
-       var $div = $('.canvas-body', window.parent.document);
-       alert("Diag: searching for parent canvas-body");
-       console.log($div);
-       console.log($div.length);
-       console.log($div.width());
-    };
+  var handle_resize = function() {
+    var ratio = 1;
+    if (window.devicePixelRatio) {
+      ratio = window.devicePixelRatio;
+    }
+    var ww = $('body').width() * ratio;
+    var sw = screen.width * ratio;
+    if (sw < ww) {
+       console.log(sw);
+       console.log(ww);
+       var $dynabody = $('.dynamic-body');
+       $dynabody.css('width', (sw-20)+'px');
+    }
+  };
 
-    handle_resize();
+  handle_resize();
 
-    $( window ).resize(handle_resize);
-    
+  $( window ).resize(handle_resize);
 
 	(timelines.length > 0) && initTimeline(timelines);
 
 
-    function stopAllVideos($root) {
+  function stopAllVideos($root) {
         console.log($root);
         // Easy way to stop a video is to simply reload the SRC attribute of the iframe.
         $root.find('iframe').each(function() {
@@ -1241,7 +1249,8 @@ jQuery(document).ready(function($){
             // console.log("Autostop on video: " + origSrc);
             $(this).attr('src', origSrc);
         });
-    }
+  }
+
 
 	function initTimeline(timelines) {
 		timelines.each(function(){
