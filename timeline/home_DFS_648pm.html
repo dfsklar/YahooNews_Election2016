@@ -1,0 +1,1556 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style type='text/css'>
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, sub, sup, tt, var,
+u, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, main {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}    
+  </style>
+
+  <style type='text/css'>
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+*, *::after, *::before {
+  box-sizing: border-box; }
+
+html {
+  font-size: 62.5%; }
+
+p {
+  margin-top: 10px !important; }
+
+body {
+  font-size: 1.6rem;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  color: #383838;
+  background-color: #ffffff; }
+
+a {
+  color: #0079f2;
+  text-decoration: none; }
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+.cd-horizontal-timeline {
+  opacity: 0;
+  margin: 2em auto;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  /* DFSKLARD plays with all of this */ }
+  .cd-horizontal-timeline::before {
+    /* never visible - this is used in jQuery to check the current MQ */
+    content: 'mobile';
+    display: none; }
+  .cd-horizontal-timeline.loaded {
+    /* show the timeline after events position has been set (using JavaScript) */
+    opacity: 1; }
+  .cd-horizontal-timeline .timeline-event-marker .who {
+    margin-top: 9px;
+    font-size: 130%;
+    margin-bottom: 3px; }
+  .cd-horizontal-timeline .timeline-event-marker .what {
+    font-style: italic;
+    font-size: 110%; }
+  .cd-horizontal-timeline .timeline-event-marker .date {
+    margin-top: 6px; }
+  .cd-horizontal-timeline .timeline-event-marker img {
+    height: 45px; }
+  .cd-horizontal-timeline .timeline {
+    position: relative;
+    /* SKLARDFSKLAR plays with following: */
+    height: 180px;
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto; }
+  .cd-horizontal-timeline .events {
+    /* this is the grey line/timeline */
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    /* SKLARDFSKLAR plays with: */
+    top: 150px;
+    height: 2px;
+    /* width will be set using JavaScript */
+    background: #e6e6e6;
+    -webkit-transition: -webkit-transform 0.4s;
+    -moz-transition: -moz-transform 0.4s;
+    transition: transform 0.4s; }
+  .cd-horizontal-timeline .events-wrapper {
+    position: relative;
+    height: 100%;
+    margin: 0 40px;
+    overflow: hidden; }
+    .cd-horizontal-timeline .events-wrapper::after, .cd-horizontal-timeline .events-wrapper::before {
+      /* these are used to create a shadow effect at the sides of the timeline */
+      content: '';
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      height: 100%;
+      width: 23px; }
+    .cd-horizontal-timeline .events-wrapper::before {
+      left: -3;
+      background-image: -webkit-linear-gradient( left , #ffffff, rgba(255, 255, 255, 0));
+      background-image: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0)); }
+    .cd-horizontal-timeline .events-wrapper::after {
+      right: -3;
+      background-image: -webkit-linear-gradient( right , #ffffff, rgba(255, 255, 255, 0));
+      background-image: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0)); }
+  .cd-horizontal-timeline .who {
+    font-weight: bold; }
+  .cd-horizontal-timeline .filling-line {
+    /* this is used to create the green line filling the timeline */
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #0079f2;
+    -webkit-transform: scaleX(0);
+    -moz-transform: scaleX(0);
+    -ms-transform: scaleX(0);
+    -o-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -ms-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+    -webkit-transition: -webkit-transform 0.3s;
+    -moz-transition: -moz-transform 0.3s;
+    transition: transform 0.3s; }
+  .cd-horizontal-timeline .events a {
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    text-align: center;
+    font-size: 1.3rem;
+    padding-bottom: 15px;
+    color: #383838;
+    /* fix bug on Safari - text flickering while timeline translates */
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0); }
+    .cd-horizontal-timeline .events a::after {
+      /* this is used to create the event spot */
+      content: '';
+      position: absolute;
+      left: 50%;
+      right: auto;
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      transform: translateX(-50%);
+      bottom: -5px;
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      border: 2px solid #e6e6e6;
+      background-color: #ffffff;
+      -webkit-transition: background-color 0.3s, border-color 0.3s;
+      -moz-transition: background-color 0.3s, border-color 0.3s;
+      transition: background-color 0.3s, border-color 0.3s; }
+    .no-touch .cd-horizontal-timeline .events a:hover::after {
+      background-color: #0079f2;
+      border-color: #0079f2; }
+    .cd-horizontal-timeline .events a.selected {
+      pointer-events: none; }
+      .cd-horizontal-timeline .events a.selected::after {
+        background-color: #0079f2;
+        border-color: #0079f2; }
+    .cd-horizontal-timeline .events a.older-event::after {
+      border-color: #0079f2; }
+  @media only screen and (min-width: 1100px) {
+    .cd-horizontal-timeline {
+      margin: 6em auto; }
+      .cd-horizontal-timeline::before {
+        /* never visible - this is used in jQuery to check the current MQ */
+        content: 'desktop'; } }
+
+.cd-timeline-navigation a {
+  /* these are the left/right arrows to navigate the timeline */
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  height: 34px;
+  width: 34px;
+  white-space: nowrap;
+  -webkit-transition: border-color 0.3s;
+  -moz-transition: border-color 0.3s;
+  transition: border-color 0.3s;
+  text-align: center;
+  font-size: 22px;
+  padding-top: 2px; }
+  .cd-timeline-navigation a::after {
+    position: absolute;
+    height: 16px;
+    width: 16px; }
+  .cd-timeline-navigation a.prev {
+    cursor: pointer;
+    font-size: 40px;
+    padding-right: 3px;
+    padding-top: 7px; }
+  .cd-timeline-navigation a.next {
+    cursor: pointer;
+    font-size: 40px;
+    padding-left: 3px;
+    padding-top: 7px;
+    right: 0; }
+  .no-touch .cd-timeline-navigation a:hover {
+    border-color: #0079f2; }
+  .cd-timeline-navigation a.inactive {
+    cursor: pointer; }
+  .cd-timeline-navigation a.inactive::after {
+      background-position: 0 -16px; }
+  .no-touch .cd-timeline-navigation a.inactive:hover {
+      border-color: #e6e6e6; }
+
+.cd-horizontal-timeline .events-content {
+  position: relative;
+  width: 100%;
+  margin: 2em 0;
+  overflow: hidden;
+  -webkit-transition: height 0.4s;
+  -moz-transition: height 0.4s;
+  transition: height 0.4s; }
+  .cd-horizontal-timeline .events-content li {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    left: 0;
+    top: 0;
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%);
+    padding: 0 5%;
+    opacity: 0;
+    -webkit-animation-duration: 0.4s;
+    -moz-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-timing-function: ease-in-out;
+    -moz-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out; }
+    .cd-horizontal-timeline .events-content li.selected {
+      /* visible event content */
+      position: relative;
+      z-index: 2;
+      opacity: 1;
+      -webkit-transform: translateX(0);
+      -moz-transform: translateX(0);
+      -ms-transform: translateX(0);
+      -o-transform: translateX(0);
+      transform: translateX(0); }
+    .cd-horizontal-timeline .events-content li.enter-right, .cd-horizontal-timeline .events-content li.leave-right {
+      -webkit-animation-name: cd-enter-right;
+      -moz-animation-name: cd-enter-right;
+      animation-name: cd-enter-right; }
+    .cd-horizontal-timeline .events-content li.enter-left, .cd-horizontal-timeline .events-content li.leave-left {
+      -webkit-animation-name: cd-enter-left;
+      -moz-animation-name: cd-enter-left;
+      animation-name: cd-enter-left; }
+    .cd-horizontal-timeline .events-content li.leave-right, .cd-horizontal-timeline .events-content li.leave-left {
+      -webkit-animation-direction: reverse;
+      -moz-animation-direction: reverse;
+      animation-direction: reverse; }
+  .cd-horizontal-timeline .events-content li > * {
+    max-width: 800px;
+    /* margin: 0 auto; DFSKLARD CANCEL */ }
+  .cd-horizontal-timeline .events-content h2 {
+    font-weight: bold;
+    font-size: 2.6rem;
+    font-family: "Helvetica Neueu", "Arial", serif;
+    font-weight: 700;
+    line-height: 1.2; }
+  .cd-horizontal-timeline .events-content em {
+    display: block;
+    font-style: italic;
+    margin: 10px auto; }
+    .cd-horizontal-timeline .events-content em::before {
+      content: '- '; }
+  .cd-horizontal-timeline .events-content p {
+    font-size: 1.4rem;
+    color: #26282A; }
+  .cd-horizontal-timeline .events-content h5 {
+    font-size: 1.4rem;
+    margin-top: 19px !important;
+    color: #0066CC;
+    font-weight: bold; }
+  .cd-horizontal-timeline .events-content em, .cd-horizontal-timeline .events-content p {
+    line-height: 1.6; }
+  @media only screen and (min-width: 768px) {
+    .cd-horizontal-timeline .events-content h2 {
+      font-size: 5rem; }
+    .cd-horizontal-timeline .events-content em {
+      font-size: 2rem; }
+    .cd-horizontal-timeline .events-content p {
+      font-size: 1.8rem; } }
+
+@-webkit-keyframes cd-enter-right {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(100%); }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0%); } }
+@-moz-keyframes cd-enter-right {
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(100%); }
+  100% {
+    opacity: 1;
+    -moz-transform: translateX(0%); } }
+@keyframes cd-enter-right {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%); }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
+    transform: translateX(0%); } }
+@-webkit-keyframes cd-enter-left {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-100%); }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0%); } }
+@-moz-keyframes cd-enter-left {
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(-100%); }
+  100% {
+    opacity: 1;
+    -moz-transform: translateX(0%); } }
+@keyframes cd-enter-left {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%); }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
+    transform: translateX(0%); } }
+.video-holder {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  text-align: center; }
+
+/*# sourceMappingURL=style.css.map */
+  </style>
+  	
+	<title>16 in 2016: The Moments</title>
+</head>
+<body>
+<div class='dynamic-body'>
+  <section class="cd-horizontal-timeline">
+	<div class="timeline">
+    <div class="events-wrapper">
+
+      
+			<div class="events">
+				<ol>
+
+
+          <LI><a href="#0" data-date="14/05/2015" class='selected ignoreme'>
+              <div class='timeline-event-marker'>
+                <div class=who></div>
+                <div class=what></div>
+                <div class='date'></div>
+          </div></a></LI>
+
+
+      <!-- GORDON: Place each event on the timeline using one LI
+                  element looking like this.  Note the dates must be
+                  dd/mm/yyyy -->
+
+          
+					<li><a href="#0" data-date="16/06/2015">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_trump_mexican.jpg'/>
+                <div class=who>Trump</div>
+                <div class=what>'They’re<br>rapists…'</div>
+                <div class='date'>June 2015</div>
+          </div></a></li>
+
+					<li><a href="#0" data-date="18/07/2015">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_trump_mccain.jpg'/>
+                <div class=who>Trump</div>
+                <div class=what>Trump knocks <br>McCain</div>
+                <div class='date'>July 2015</div>
+          </div></a></li>
+
+					<li><a href="#0" data-date="07/08/2015">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_trump_blood.jpg'/>
+                <div class=who>Trump</div>
+                <div class=what>Trump attacks<br/>Kelly</div>
+                <div class='date'>August 2015</div>
+          </div></a></li>
+
+
+				<li><a href="#0" data-date="13/10/2015">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_sanders.jpg'/>
+                <div class=who>Bernie</div>
+                <div class=what>"Damn <br/>emails!"</div>
+                <div class='date'>October 2015</div>
+          </div></a></li>
+
+          
+				<li><a href="#0" data-date="14/10/2015">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_trump_rallies.jpg'/>
+                <div class=who>Trump</div>
+                <div class=what>Rally <br/>violence</div>
+                <div class='date'>October 2015</div>
+          </div></a></li>
+
+          		<li><a href="#0" data-date="21/10/2015">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_biden.jpg'/>
+                <div class=who>Biden</div>
+                <div class=what>Biden <br/>bows out</div>
+                <div class='date'>October 2015</div>
+          </div></a></li>
+          
+                   
+                 <li><a href="#0" data-date="07/12/2015">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_trump_muslim.jpg'/>
+                <div class=who>Trump</div>
+                <div class=what>Muslim <br/>ban</div>
+                <div class='date'>December 2015</div>
+          </div></a></li>
+          
+          
+               <li><a href="#0" data-date="06/02/2016">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_christie.jpg'/>
+                <div class=who>GOP Debates</div>
+                <div class=what>Christie<br/> vs. Rubio</div>
+                <div class='date'>February 2016</div>
+          </div></a></li>
+          
+          
+                                        	<li><a href="#0" data-date="07/07/2016">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_comey.jpg'/>
+                <div class=who>Comey </div>
+                <div class=what>Hillary off <br/>the hook</div>
+                <div class='date'>July 2016</div>
+          </div></a></li>
+          
+          
+                                                <li><a href="#0" data-date="09/09/2016">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_hillary_deplorables.jpg'/>
+                <div class=who>Hillary </div>
+                <div class=what>Basket of <br/>Deplorables</div>
+                <div class='date'>September 2016</div>
+          </div></a></li>
+          
+          
+                                                 <li><a href="#0" data-date="11/09/2016">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_hillary_stumbles.jpg'/>
+                <div class=who>Hillary </div>
+                <div class=what>Hillary’s <br/>health</div>
+                <div class='date'>September 2016</div>
+          </div></a></li>
+          
+          
+                                               <li><a href="#0" data-date="26/09/2016">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_trump_machado.jpg'/>
+                <div class=who>Trump</div>
+                <div class=what>Fat <br/>shaming</div>
+                <div class='date'>September 2016</div>
+          </div></a></li>
+
+
+                                               
+                     <li><a href="#0" data-date="01/10/2016">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_trump_taxes.jpg'/>
+                <div class=who>Trump</div>
+                <div class=what>Trump’s taxes<br/> revealed</div>
+                <div class='date'>October 2016</div>
+          </div></a></li>
+          
+          
+                     <li><a href="#0" data-date="07/10/2016">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_wiki.jpg'/>
+                <div class=who>WikiLeaks</div>
+                <div class=what>Emails <br/>leaked</div>
+                <div class='date'>October 2016</div>
+          </div></a></li>
+          
+          
+          <li><a href="#0" data-date="12/10/2016">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_trump_tape.jpg'/>
+                <div class=who>Trump</div>
+                <div class=what>Lewd Trump<br/>tape</div>
+                <div class='date'>October 2016</div>
+          </div></a></li>
+          
+          
+                    <li><a href="#0" data-date="19/10/2016">
+              <div class='timeline-event-marker'>
+                <img src='news_images/timeline_trump_debate.jpg'/>
+                <div class=who>Trump</div>
+                <div class=what>"I’ll keep you<br/> in suspense’</div>
+                <div class='date'>October 2016</div>
+          </div></a></li>
+          
+
+				</ol>
+ 
+				<span class="filling-line" aria-hidden="true"></span>
+			</div> <!-- .events -->
+		</div> <!-- .events-wrapper -->
+
+
+        <ul class="cd-timeline-navigation">
+			<li><a href="#0" class="prev inactive">&#9668;</a></li>
+			<li><a href="#0" class="next">&#9658;</a></li>
+		</ul> <!-- .cd-timeline-navigation -->
+			
+	</div> <!-- .timeline -->
+
+
+
+    
+	<div class="events-content">
+		<ol>
+
+
+
+                    <LI class="selected invisible" data-date="14/05/2015">
+                <!-- HEADLINE: -->
+				<h2></h2>
+                <!-- DATE -->
+               
+<p><b>Click on dates or arrows in the above timeline to see those moments.</b></p>
+
+<p>	In the view from 30,000 feet, the narrative of the election seems clear, almost foreordained. Both of the eventual nominees led from early on in the primary polling, and were roughly tied from right after the conventions until the early fall, when Clinton began building a lead that grew week by week. 
+</p><p>
+But as it was lived day to day — by the candidates, their aides and the reporters who covered them — the campaign’s arc is a jagged series of hair-raising surprises, of inflection points, near-fatal collapses and miraculous recoveries. An envelope arrives anonymously at the New York Times with three sheets of paper, leading to speculation that Donald Trump avoided paying federal income tax for years (bad!), but the document-dump that many expected would follow, blowing off the lid on his foreign business dealings, never materializes (good!). The FBI director says Hillary Clinton’s treatment of classified information appears to have violated the law (bad!), but he’s not recommending prosecution (good!). Trump attacks the heroism of John McCain (bad!) but defies predictions and actually gains afterward in the polls (good!).
+</p><p>
+And most baffling and poignant of all, Jeb Bush wrestles with the legacy of his brother, President George W. Bush, and loses. Over the course of two days in May 2015, he said the invasion of Iraq was a good idea, even in retrospect (bad!), then says he misunderstood the question (worse!) and was answering a hypothetical based on the information available at the time, ending up with a confession that he wasn’t sure how he would have decided (catastrophic! The man is running for president and he can’t take a position on the most consequential foreign policy issue of the century). His campaign never recovered, and generations of candidates yet unborn will study Bush’s handling of the most obvious question a candidate named Bush would face as a lesson in how not to run for president.
+</p><p>
+There were too many such critical moments and seminal events in the 2016 race to cover more than a fraction of them. And there might still be others, right up until Election Day. On the heels of the Miss Universe ambush, the “Access Hollywood” bombshell and the WikiLeaks shock, the candidates would be wise to prepare for the possibility of a November Surprise. 
+</p><p>
+But here is our list of some of the other crucial turning points in the 2016 race.<i>&mdash; By Jerry Adler</i></p>
+</p>
+
+                
+                
+               <p><div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/16-2016-people-places-moments-193238156.html?format=embed&region=US&lang=en-US&site=news&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:68daee21-a8db-3bcf-aea0-74d13f3c5e9c}"></iframe></div></p>
+                
+                <!--<p> <a href="http://yhoo.it/2eD4tJq"><img src="https://s.yimg.com/dh/ap/politics/interactive/16_in_2016/images/banner_sixteen_in_2016_WW.png" /></a></p>--->
+
+         </LI>
+
+
+
+
+			<li data-date="16/06/2015">
+				<!-- event description here -->
+				<h2>Trump launches campaign with attack on Mexicans</h2>
+				<em>June 16, 2015</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/donald-trump-called-mexican-immigrants-170000114.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:776a55d3-a1a6-3b50-9212-d3f0834e5891}"></iframe></div>
+<p>		
+Of all the things that have been bellowed, sneered, muttered or blurted out in the 2016 campaign, the one likely to live longest in memory is Donald Trump’s two-word dismissal of Mexican immigrants in his announcement speech on June 16, 2015: “They’re rapists.” That was only part of his rant about Mexico’s “sending people that have lots of problems” across the border: “They’re bringing drugs. They’re bringing crime. They’re rapists. And some, I assume, are good people.” He packed a number of questionable assertions into that passage. There is no evidence — indeed, evidence to the contrary — that immigrants commit more crimes than native-born citizens. The “problems” that afflict border crossers are mostly that they are poor or, in some cases, fleeing gang violence at home. And Mexico isn’t “sending” them. They are, by and large coming of their own volition, looking for work. But the graphic specificity of “rapists” is what stuck in most listeners’ minds.
+</p><p>	
+At the time, though, this part of the speech was mostly overlooked in newspaper articles that focused on the opulence of the Trump Tower setting, his grandiose boasts about his fortune — and the unlikelihood of his becoming the nominee. The New York Times gave it a passing mention in the 19th paragraph of a <a target="peopleplacesmoments_external" href="http://www.nytimes.com/2015/06/17/us/politics/donald-trump-runs-for-president-this-time-for-real-he-says.html">story</a> that began, “Donald J. Trump, the garrulous real estate developer whose name has adorned apartment buildings, hotels, Trump-brand neckties and Trump-brand steaks, announced on Tuesday his entry into the 2016 presidential race, brandishing his wealth and fame as chief qualifications in an improbable quest for the Republican nomination.” The Washington Post <a target="peopleplacesmoments_external" href="https://www.washingtonpost.com/politics/donald-trump-is-now-a-candidate-for-president-of-the-united-states/2015/06/16/5e6d738e-1441-11e5-9ddc-e3353542100c_story.html">article</a> on the announcement didn’t mention “rapists” at all.
+</p><p>	
+The repercussions began a few days later, helped along by Hillary Clinton, who, without naming Trump, mentioned to reporters that a candidate had recently “said some very inflammatory things about Mexicans — you don’t talk like that” in political campaigns. Within a week, Univision, the Spanish-language network, said it would <a target="peopleplacesmoments_external" href="http://www.nytimes.com/politics/first-draft/2015/06/25/univision-severs-ties-with-donald-trump-and-beauty-pageants/">drop the Miss USA and Miss Universe pageants,</a> partly owned by Trump. Then NBC, a co-owner of the pageants, sold its share back to Trump, who promptly <a target="peopleplacesmoments_external" href="http://www.nytimes.com/2015/09/15/business/media/trump-sells-miss-universe-organization-to-wme-img-talent-agency.html?_r=0">unloaded his entire stake</a> to the entertainment conglomerate WME-IMG. For good measure, NBC dropped Trump as host of “Celebrity Apprentice,” where he was to be replaced by Arnold Schwarzenegger.
+</p><p>	
+Unlike some things he has said, this is one thing Trump never denied saying. Nor did he apologize or qualify it. On the contrary, he repeated it numerous times in interviews and speeches, casting it as a simple matter of fact and <a target="peopleplacesmoments_external" href="http://www.deathandtaxesmag.com/252615/trump-its-common-sense-that-mexican-immigrants-are-rapists-murderers/">adding “killers” and “murderers”</a> to the roster of undesirables coming across the border. He did, however, <a target="peopleplacesmoments_external" href="http://www.politico.com/blogs/media/2015/06/trump-univision-at-war-over-miss-universe-209487#ixzz4NI3atrA4">milk the controversy for its media-bashing potential,</a> charging reporters with attempting “to distort my comments regarding Mexico and its great people," adding that he has "tremendous respect for the leaders of Mexico.” His campaign complained that the context of his remarks got stripped away, and the gist boiled down, by Democratic <a target="peopleplacesmoments_external" href="http://www.politifact.com/virginia/statements/2016/aug/08/tim-kaine/tim-kaine-falsely-says-trump-said-all-mexicans-are/">vice-presidential candidate Tim Kaine</a>, among others, to “all Mexicans are rapists,” which, in fairness, was not what he said.
+</p><p>	
+The remark still haunted him, though, as late as this August, when Trump impulsively flew to Mexico to meet with that country’s president amid conflicting reports that he was softening his hard-line immigration stance. Then he gave a fiery speech that took it all back, prompting some of the few Hispanic leaders who had endorsed him to change their mind. Recent polls showed him <a target="peopleplacesmoments_external" href="https://www.washingtonpost.com/politics/poll-clinton-leads-trump-among-hispanics-but-not-by-as-much-as-you-might-think/2016/09/12/19c8b5f0-77bd-11e6-8149-b8d05321db62_story.html">trailing Clinton</a> by anywhere from 24 to 50 points among Hispanics in various states.
+</p><p>	
+In Mexico itself, he recently <a target="peopleplacesmoments_external" href="http://graficos.elfinanciero.com.mx/encuestas/2016/enc_eu_jun28/">polled</a> at 2 percent.<i>&mdash; By Jerry Adler</i></p>
+
+<p>	
+<h5>RELATED LINKS</h5>
+          <p>
+<strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/on-the-issues-donald-trump-as-presidential-121697521741.html" target="new"> On the issues: Donald Trump as presidential candidate »</a>  
+</p>
+</li>
+
+
+
+<li data-date="18/07/2015">
+<h2>‘He’s a war hero ’cause he was captured. I like people that weren’t captured.’</h2>
+<em>July 18, 2015</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/donald-trump-slammed-ariz-senator-170000481.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:31bbca11-1368-3ddf-82cc-11d380c82b6a}"></iframe></div>
+<p>	Remember Donald Trump?
+</p><p>	
+The New York real-estate developer and reality-show star announced his candidacy for president in June 2015 and within a month had blown up his campaign with a jaw-dropping attack on a Republican icon, Arizona Sen. John McCain.
+</p><p>	
+“He is not a war hero,” Trump told pollster Frank Luntz, who was hosting an interview session at the Family Leadership Summit in Ames, Iowa. McCain had been at odds with Trump over his proposal for a harsh crackdown on immigration from Mexico.
+</p><p>	
+“He is a war hero,” Luntz interjected.
+</p><p>	
+“He is a war hero because he was captured,” Trump said, cutting him off. “I like people that weren’t captured, OK?”
+</p><p>	
+These remarks — from someone who had escaped the draft (because of “bone spurs” in his heels) at the height of the Vietnam War, directed at a former Navy flier and POW who had refused early repatriation without his fellow prisoners — were denounced across the political spectrum, and resulted in widespread predictions of his imminent political demise. Politico’s judgment — “Donald Trump may have finally crossed the line” — was one of the milder reactions.
+</p><p>	
+Foreshadowing his defense in future contretemps, Trump denied the plain meaning of his remarks (“Four times I said he was a hero”) but refused to back down or apologize. If you don’t remember him dropping out in disgrace, it’s because he didn’t; in what was widely seen as a minor miracle, less than two weeks after he made the comments, polls showed him leading the Republican field <a target="peopleplacesmoments_external" href="https://www.qu.edu/news-and-events/quinnipiac-university-poll/national/release-detail?ReleaseID=2264">by a wide margin</a>. It was a miracle that was to occur many times during the next year, as Trump managed to turn outrage over statements that were, by most standards, outrageous into a principled refusal to bow to political correctness.
+</p><p>	
+The episode also inaugurated Trump’s complicated relationship with the military. During his campaign he went out of his way to praise veterans, to denounce their treatment by the Obama administration, and to boast about his generosity toward them — a boast that turned into an embarrassment in May when the <a target="peopleplacesmoments_external" href="https://www.washingtonpost.com/news/post-politics/wp/2016/05/24/four-months-later-donald-trump-says-he-gave-1-million-to-veterans-group/">Washington Post reported</a> that he had yet to make good on a pledge to donate $1 million to veterans charities. (Shortly afterward, Trump sent the entire amount to the Marine Corps-Law Enforcement Foundation, which supports the families of Marines and police killed in the line of duty.) Then after the Democratic convention, he picked a fight with Khizr and Ghazala Khan, the Pakistani-American parents of an Army captain killed in action in Iraq. That earned him a ringing denunciation from the Veterans of Foreign Wars. He mocked the nation’s top military leaders as weak and stupid, claimed to “know more about ISIS than the generals do,” and implied he would clean house at the Pentagon if he became president.
+</p><p>	
+Set those gaffes against Trump’s swaggering, bellicose demeanor and popularity in the Southern and border states that disproportionately populate the military, and his ringing but vague promises to reverse what he describes as the precipitous decline in American military power under Obama. Which do you think won out?
+</p><p>	
+As of early October, the verdict was in: <a target="peopleplacesmoments_external" href="http://www.newsmax.com/Headline/Fox-News-Poll-Trump-Leads/2016/10/04/id/751572/">Trump was leading Clinton</a> among veterans by 14 points.<i>&mdash; By Jerry Adler</i>
+<p>	
+<h5>RELATED LINKS</h5>
+          <p>
+<strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-wont-apologize-for-mccain-war-hero-124495589501.html" target="new">Trump won't apologize for McCain 'war hero' comments »</a>  
+</p> <p>
+<strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/republicans-defend-mccain-against-attacks-from-124429756316.html" target="new">Trump's attacks on McCain war record decried by Republicans »</a>  </p> 
+</li>
+
+
+
+<li data-date="07/08/2015">
+<h2>‘There was blood coming out of her eyes, blood coming out of her … wherever.’</h2>
+<em>Aug. 7, 2015</em>              
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/donald-trump-said-megyn-kelly-170000704.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:a0404455-aba6-37b1-a6af-61231cd76106}"></iframe></div>
+<p>	
+Donald Trump had every reason to expect an easy time at the first Republican debate, in August 2015: It was hosted by Fox News, run by Trump’s close friend Roger Ailes. But instead he found himself answering a question from Fox anchor Megyn Kelly about the times he called women “fat pigs, dogs, slobs and disgusting animals,” which was more than a little counterproductive to his goal of being taken seriously as a candidate for president.
+</p><p>		
+Questioned afterward about the exchange by CNN’s Don Lemon, he gave his expert opinion of Kelly’s journalistic credentials — “highly overrated,” “a lightweight,” “not very sharp” — and her demeanor: “You could see there was blood coming out of her eyes, <a target="peopleplacesmoments_external" href="https://www.youtube.com/watch?v=M28z9y4yT6Y">blood coming out of her … wherever.</a>”
+</p><p>	
+It is a seminal text in the annals of Trumpology, endlessly debated and parsed. Did he actually say, or intend to say, “out of her <i>whatever</i>,” as his campaign aides <a target="peopleplacesmoments_external" href="http://www.redstate.com/erick/2015/08/09/the-most-interesting-thing-about-trumps-statements-today/">told reporters</a> the next day — implying that it was just a way to get past the subject and move the interview along?
+</p><p>	
+Or, as his own subsequent explanation had it, was he thinking of her <a target="peopleplacesmoments_external" href="http://www.huffingtonpost.com/bernie-shine/mr-trump-whatever-is-a-wh_b_7968962.html">nose or ears</a>?
+</p><p>	
+Or did he have another orifice in mind altogether? Was he suggesting that Kelly was in a bad mood because she was menstruating?
+</p><p>	
+The very notion offended Trump to his core. “Who would say that?” he erupted indignantly to Jake Tapper of CNN. "Do you think I'd make a statement like that? Who would make a statement like that? Only a sick person would even think about that."
+</p><p>	
+The contretemps got Trump disinvited to Erick Erickson’s Red State Gathering, an important event on the calendar for aspiring Republican candidates. (“This guy’s a loser” was Trump’s response.) And it triggered a head-spinning sequence of spats and reconciliations of Shakespearean complexity among Trump, Kelly, Ailes, several other Fox anchors and Ailes’ boss Rupert Murdoch—one that ended only when Ailes got kicked out of his job following allegations of sexual harassment by a number of women at Fox, including, as some accounts have it, <a target="peopleplacesmoments_external" href="http://nymag.com/daily/intelligencer/2016/07/sources-kelly-said-ailes-sexually-harassed-her.html">Megyn Kelly</a>.
+</p><p>	
+Ailes went on to become an informal adviser to Trump, who has insisted all along he has nothing to apologize for. He explained his position to that increasingly vital source of political news, the Hollywood Reporter:
+</p><p>	
+“I believe in apologizing. But to apologize for me is very difficult. I definitely would apologize if I were wrong on something.”
+</p><p>	
+He was asked: “What was the last thing you apologized for?”
+</p><p>	
+And he replied: “It was too many years ago to remember. I have one of the great memories of all time, but it was too long ago.”<i>&mdash; By Jerry Adler</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+          <p>
+<strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/tv/republican-debate-trump-megyn-kelly-fox-news-041528323.html" target="new">Republican debate: Trump grilled by Megyn Kelly, insulted by opponents »</a>  
+</p> <p>
+<strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trump-refuses-to-apologize-to-megyn-kelly-126259906701.html" target="new">Donald Trump refuses to apologize to Megyn Kelly for 'blood' comments »</a></p> 
+<p>
+<strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-uses-rally-to-revisit-firestorms-over-megyn-kelly-disabled-reporter-210620653.html" target="new">Trump uses rally to revisit firestorms over Megyn Kelly, disabled reporter »</a>  </p> 
+<p>
+<strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-clarifies-past-remarks-megyn-213459986.html" target="new">Donald Trump refuses to apologize to Megyn Kelly for 'blood' comments »</a>  </p> 
+</li>
+
+
+<li data-date="13/10/2015">
+<h2>‘The American people are sick and tired of hearing about your damn emails!’</h2>
+<em>Oct. 13, 2015</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/bernie-sanders-sick-tired-hillary-170000844.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:877342b2-c2f4-3fe5-81a7-c27d62423fa1}"></iframe></div>
+<p>	
+There were still five candidates in the running and on the stage at the first Democratic primary debate last October. But the focus was all on Hillary Clinton, the commanding frontrunner, and on Sen. Bernie Sanders, who had been narrowing the polling gap as Clinton faced persistent questions and insinuations about the private email server she had installed at her home in Chappaqua, N.Y.
+</p><p>	
+So no one in the audience at the Wynn Las Vegas was surprised when Clinton, responding to CNN anchor Anderson Cooper, gave the default answer of politicians facing an awkward question, that she would rather talk about “the issues that matter to the American people.” 
+</p><p>	
+But viewers may have been surprised when Sanders stepped in with a comment that he acknowledged “may not be great politics. I think the secretary is right,” he went on, “— that the American people are sick and tired of hearing about your damn emails.”
+</p><p>	
+“Thank you!” a beaming Clinton replied. “Me too! Me too!”
+</p><p>	
+It was considered a shrewd move by Sanders, who got to present himself as a high-minded statesman, and who probably read the mood of the Democratic primary voters correctly; they (if not “the American people” altogether) were indeed sick and tired of the email issue. And it allowed him to segue into his list of the issues that he thought mattered to the American people: “Middle class in this country are collapsing,” he said. “We have 27 million people living in poverty. We have massive income inequality.  Our trade policies have cost us millions of decent jobs.” 
+</p><p>	
+Watch Clinton as he speaks, and you can see the smile fade and the nods stop as Sanders runs through these implicit failures by the Obama administration. But the encounter ended happily with a much-tweeted photograph of a delighted Clinton shaking Sanders’ hand. And even if the race eventually became considerably more heated, the residue of unity forged in that moment made it possible for Sanders to endorse and enthusiastically campaign for Clinton — a reconciliation that some of Donald Trump’s rivals, notably Jeb Bush, have never achieved.<i>&mdash; By Jerry Adler</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Slideshow:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/first-democratic-debate-144548233.html" target="new">First Democratic debate »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/bernie-sanders-thinks-america-is-sick-and-tired-030135840.html" target="new">Bernie Sanders thinks America is 'sick and tired of hearing about' Hillary Clinton's 'damn emails' »</a></p> 
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/video/sanders-stands-behind-clinton-emails-033011518.html?ref=gs" target="new">Sanders stands behind Clinton on emails »</a></p> 
+</li>
+            
+            
+            
+ <li data-date="14/10/2015">
+<h2>‘I’d like to punch him in the face, I’ll tell you that.’</h2>
+<em>Oct. 14, 2015</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/violent-clashes-donald-trump-rallies-170000084.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:23a583d6-0a4a-3336-b262-46547952e21f}"></iframe></div>
+<p>	
+Strong emotions are common at political rallies — that’s what they’re for, after all. Even politicians as cerebral as Barack Obama are not above calling on their followers to “fight” for their party. But Donald Trump, channeling a stream of grassroots belligerence that has surfaced repeatedly this year, is the first presidential candidate in modern times to seem to mean it literally.
+</p><p>
+Trump’s rallies were, from the outset, highly charged and frequently raucous events, and they drew protesters as well as supporters. One of them, a local activist in Birmingham, Ala., named Mercutio Southall Jr. interrupted Trump’s speech there last November by shouting “Black lives matter,” precipitating a scuffle with others in the crowd. According to the <a target="peopleplacesmoments_external" href="https://www.washingtonpost.com/news/post-politics/wp/2015/11/22/black-activist-punched-at-donald-trump-rally-in-birmingham/">Washington Post</a>, reviewing video from CNN, Southall was knocked to the floor and “surrounded by several white men who appeared to be kicking and punching him.”
+</p><p>
+“Get him the hell out of here!” Trump bellowed from the stage, in accordance with his policy until then that protesters should be ejected but not harmed. “Get him the hell out!”
+</p><p>
+The next day, though, Trump seemed to suggest that Southall — who was not seriously injured — had gotten off too lightly. “Maybe he should have been roughed up, because it was absolutely disgusting what he was doing,” he told Fox News. (Trump’s spokeswoman, Hope Hicks, later issued a clarification, saying that “the campaign does not condone this type of behavior.”)
+</p><p>
+That was just the buildup for a confrontation several months later, when Trump <a target="peopleplacesmoments_external" href="http://www.politico.com/story/2016/02/donald-trump-punch-protester-219655">volunteered himself</a> to do the roughing up. As a protester was being ejected from a rally in Las Vegas, Trump interrupted his speech to complain that “the guards are being very gentle with him.” He told the crowd that the man had been throwing punches, something witnessed by none of the reporters who were at the rally.
+</p><p>
+“I’d like to punch him in the face, I’ll tell ya that,” Trump went on, lamenting the passing of a time when hecklers “would be carried out on a stretcher.”
+</p><p>
+Violence, on the part of both supporters and protesters, continued to
+plague the campaign; in March a rally at the University of Illinois at
+Chicago was <a
+target="peopleplacesmoments_external" href="http://www.cnn.com/2016/03/11/politics/donald-trump-chicago-protests/">canceled</a>
+when a large crowd awaiting the candidate’s arrival became unruly. As
+of mid-October, luckily, no one had been killed and the reported
+injuries were mostly minor. But Trump was put on notice that at least
+one unhappy voter made a video about wanting to punch <i>him</i> in the face. It was <a target="peopleplacesmoments_external" href="https://www.washingtonpost.com/video/politics/id-like-to-punch-him-in-the-face-robert-de-niro-speaks-out-against-donald-trump/2016/10/08/9ab315b8-8d69-11e6-8cdc-4fbb1973b506_video.html">Robert De Niro.</a><i>&mdash; By Jerry Adler</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p>
+<strong>Slideshow:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/photos/chaos-in-chicago-as-trump-cancels-rally-slideshow/" target="new">Trump cancels rally in Chicago amid security concerns »</a>  
+</p> <p>
+<strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trump-punch-him-in-the-face-protester-143811811.html" target="new">Donald Trump on protester: 'I'd like to punch him in the face' »</a></p> 
+<p>
+<strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/video/trump-protester-id-punch-him-170623784.html?ref=gs" target="new">Trump on protester: 'I'd like to punch him in the face' »</a></p> 
+</li>
+          
+         
+            
+<li data-date="21/10/2015">
+<h2>Biden announces he won’t enter the race</h2>
+<em>Oct. 21, 2015</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/vice-president-joe-biden-announced-170000536.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:8983e913-3195-33f1-94c9-22e33aaecf64}"></iframe></div>
+<p>	 
+Joe Biden is 73, older than Donald Trump or Hillary Clinton, who are among the oldest presidential nominees ever. He suffered a devastating emotional blow in May 2015, with the death of his son and political heir, Beau. After a lifetime in politics, he joked recently that he has less money in the bank than Bernie Sanders. If he had run for president this year, he would have had an uphill struggle to overcome the “Obama fatigue” factor that has hampered Hillary Clinton at times during her campaign.
+</p><p>	
+But he nearly did run. As recently as the summer of 2015, reports surfaced that he was being encouraged by friends to enter the race, that he was exploring his options and that he was close to a decision. In September, still grieving, he discussed his reservations, musing that “Nobody has a right … to seek that office unless they’re willing to give it 110 percent.” But almost until the start of the first Democratic primary debate, on Oct. 13, organizers were prepared for a possible last-second announcement.
+</p><p>	
+A week later, he put the speculation to rest as he addressed the country from the Rose Garden, with his wife, Jill, and President Obama at his side. He said he had overcome his doubts about his commitment, but that it was no longer possible to raise the tens of millions of dollars he would need for a run while also campaigning in the early voting states. “As my family and I have worked through the grieving process, I've said all along that it may very well be that that process closes the window on mounting a realistic campaign for president, and I've concluded it has closed,” he said, with evident regret, writing the final chapter in his long and storied political career.
+</p><p>	
+It’s not at all clear how a three-way race among Biden, Clinton and Sanders would have played out, but political pundits suspect that if he had actually been nominated, he would have run away with the election long ago. Democrats nervously looking over their shoulders, heading into an election with a candidate who, although leading, seems unable to shake the “I just don’t like her” label, might have welcomed the chance to find out.<i>&mdash; By Jerry Adler</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p>
+<strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/biden-im-not-running-for-president-in-2016-162514730.html" target="new">Biden: I'm not running for president in 2016 »</a>  
+</p> <p>
+<strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/what-becomes-of-joe-biden-now-145641041.html" target="new">What becomes of Joe Biden now? »</a></p> 
+<p>
+<strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/video/biden-not-run-170610887.html?ref=gs" target="new">Biden will not run »</a></p> 
+</li>
+
+         
+         
+<LI data-date="07/12/2015">
+<h2>‘Donald J. Trump is calling for a total and complete shutdown of Muslims entering the United States.’</h2>
+<em>Dec. 7, 2015</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/donald-trump-announced-muslim-ban-170000373.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:b74bc9ab-7ce3-3668-b6da-587c40451607}"></iframe></div>
+<p>	
+For those who were paying close attention, it should have come as no great surprise. In an <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trump-has-big-plans-1303117537878070.html?ref=gs">interview</a> with Hunter Walker of Yahoo News last November, Donald Trump had warned that in the face of terror attacks, “We’re going to have to do things that we never did before. And some people are going to be upset about it.” Yahoo News asked Trump whether this might extend to registering Muslims in a database or giving them a form of special identification that noted their religion. He wouldn’t rule it out.
+</p><p>
+That was a few weeks before Syed Rizwan Farook, an American citizen born in Chicago to Pakistani immigrants, together with his Pakistani-born wife, a legal permanent resident, shot up a meeting of the county health department — Farook’s employer — in San Bernardino, Calif., killing 14. And just days after that attack, Trump stood up at a rally in Mount Pleasant, S.C., and read a written statement his campaign had released earlier in the day. It began, “Donald J. Trump is calling for a total and complete shutdown of Muslims entering the United States until our country's representatives can figure out what <i>the hell</i> is going on.”
+</p><p>
+So there had been a warning, but the world was still shocked by this unprecedented call to exclude 1.6 billion people, about a quarter of the world’s population, from entering the United States. “Until we are able to determine and understand this problem and the dangerous threat it poses,” Trump’s statement continued, “our country cannot be the victims [sic] of horrendous attacks by people that believe only in jihad, and have no sense of reason or respect for human life.” Many reporters couldn’t believe what they heard, but they were set straight by his campaign aides. His campaign manager, Corey Lewandowski, <a target="peopleplacesmoments_external" href="http://www.bloomberg.com/politics/articles/2015-12-07/trump-wants-total-and-complete-shutdown-of-muslims-entering-u-s-">assured Bloomberg</a> that the policy would apply to “everyone” who is a Muslim, including those applying for permanent residency as well as non-immigrant visas as a tourist or student. A spokeswoman, when asked what inspired the policy, said <a target="peopleplacesmoments_external" href="http://www.politico.com/story/2015/12/donald-trump-shutdown-of-muslims-216504">Trump’s answer was “death.”</a>
+</p><p>
+His Republican rivals were quick to pounce, although, as the primary results would show, in the wrong direction. “Donald Trump is unhinged,” was Jeb Bush’s reaction. New Jersey Gov. Chris Christie, still months away from dropping out and endorsing Trump, called it “a ridiculous view” and “the kind of things that people say when they have no experience and don’t know what they’re talking about.”
+</p><p>
+The statement also captured the attention of the world, especially parts of the world — such as America’s closest ally, Great Britain — whose citizens might be affected by it. Over the ensuing months, Trump qualified and hedged it, suggesting at one point it might apply only to citizens of <a target="peopleplacesmoments_external" href="http://www.cnn.com/2016/07/24/politics/donald-trump-muslim-ban-election-2016/">“any nation that has been compromised by terrorism,”</a> which some characterized as a narrowing of the ban but he insisted was actually an “expansion.”
+</p><p>
+“People were so upset when I used the word ‘Muslim,’” Trump explained, sort of, to Chuck Todd. “‘Oh, you can’t use the word Muslim.’ Remember this. And I’m OK with that, because I’m talking territory instead of Muslim.”
+</p><p>
+He succeeded, at least, in creating enough confusion that when his running mate, Mike Pence was <a target="peopleplacesmoments_external" href="http://www.reuters.com/article/us-usa-election-trump-muslims-idUSKCN126256">asked on Morning Joe</a> if a total ban on Muslims entering the country was still the campaign’s position, he could confidently answer, “of course not.” But as of mid-October, the statement was <a target="peopleplacesmoments_external" href="https://www.donaldjtrump.com/press-releases/donald-j.-trump-statement-on-preventing-muslim-immigration">still on Trump’s website.</a><i>&mdash; By Jerry Adler</i></p>
+    
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-muslim-profiling-000000496.html" target="new">Donald Trump: U.S. should 'seriously' consider profiling American Muslims »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-defends-muslim-ban-morning-joe-lindsey-154401548.html?ref=gs" target="new">Donald Trump defends Muslim ban: 'We're at war' »</a></p> 
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/video/donald-trump-doubles-down-muslim-160813712.html?ref=gs" target="new">Donald Trump doubles down on Muslim policy »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-muslim-ban-just-a-suggestion-140024443.html" target="new">Trump: Muslim ban was 'just a suggestion' »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/in-wake-of-attack-trump-renews-calls-for-banning-muslims-from-u-s-164054379.html" target="new">In wake of attack, Trump renews call for banning Muslims from U.S. »</a></p> 
+</li>
+         
+         
+         
+<LI data-date="06/02/2016">
+<h2>Christie takes down Robot Rubio</h2>
+<em>Feb. 6, 2016</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/gov-chris-christie-took-down-170000949.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:f7abf806-ed22-3aa6-89a9-c8163ab9aa88}"></iframe></div>
+<p>	
+It is wisdom handed down by generations of campaign managers to
+aspiring candidates, the political equivalent of “hit ’em where they
+ain’t”: <i>stick to your talking points</i>. That advice works well, unless — like Sen. Marco Rubio — you end up with your talking points stuck to you, like gum on your shoe.
+</p><p>
+The Florida senator came into the Feb. 6 debate at Saint Anselm College as the putative man to beat in New Hampshire, coming off his unexpected third-place finish in the Iowa caucuses. But then he ran into a political buzz saw named Chris Christie, the New Jersey governor who saw Rubio as an obstacle to his own path to the nomination.
+</p><p>
+Rubio should have seen it coming, the New York Times <a target="peopleplacesmoments_external" href="http://www.nytimes.com/2016/02/11/us/politics/marco-rubio.html">reported</a>, although its account was disputed by the senator’s aides. As the men waited backstage before the debate, Rubio supposedly remarked (“playfully,” according to the Times): “I understand I am going to have a hard time tonight,” and Christie replied: “Yes, you are.” But it came from an unexpected direction, during an anodyne exchange about whose experience better qualified them to be president. Rubio inexplicably launched into a set-piece attack on Barack Obama:
+</p><p>
+“Let’s dispel with this fiction that Barack Obama doesn’t know what he’s doing. He knows exactly what he’s doing. He is trying to change this country. He wants America to become more like the rest of the world…”
+</p><p>
+This fragment from Rubio’s stump speech referenced an arcane debate among Republicans about whether Obama was a callow incompetent who had landed in the Oval Office by affirmative action or a sinister manipulator bent on implementing Saul Alinsky’s plan for America’s destruction. Rubio realized that the “Obama is in over his head” case could be turned against him, as another first-term senator making an audacious bid for the White House, so he was arguing for Obama as evil genius.
+</p><p>
+Only he said it again, a few moments later, in almost the identical words.
+</p><p>
+“Here’s the bottom line. This notion that Barack Obama doesn’t know what he’s doing is just not true. He knows exactly what he’s doing.”
+</p><p>
+Gleefully, Christie pounced:
+</p><p>
+“There it is. There it is. The memorized 25-second speech. There it is, everybody.”
+</p><p>
+A few seconds later, Rubio proved exactly what Christie was saying:
+</p><p>
+“We are not facing a president that doesn’t know what he’s doing. He knows what he is doing.”
+</p><p>
+Even then, Rubio didn’t seem to understand that he’d done anything
+wrong — after all, <i>that was his talking point</i> — but within hours the reviews started coming in, and they were brutal. A candidacy built almost entirely on Rubio’s putative skills as a candidate was collapsing along with his reputation.
+</p><p>
+    The man who was supposed to head off Donald Trump in New Hampshire wound up back in fifth place — although ahead of Christie, who dropped out himself after coming in sixth. Dogged by Democratic trolls in homemade robot costumes, Rubio soldiered on, leaving the race in March after a loss in his home state of Florida. And the rest, of course, is history: Christie endorsed Trump and was rewarded with a job heading Trump’s transition team and, many observers surmise, the promise of a cabinet post in a Trump administration. But a more likely scenario is that Rubio, who scrambled back into the race for his Senate seat, will stay in Washington, while Christie, up against New Jersey term limits and seriously tarnished by the “Bridgegate” scandal in his home state, may be looking for work in the private sector after next year.<i>&mdash; By Jerry Adler</i>
+</p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Slideshow:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/8th-gop-debate-042401499.html" target="new">The 8th GOP debate »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/chris-christies-attacks-rattle-marco-rubio-023817040.html" target="new">Chris Christie's attacks rattle Marco Rubio »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/marco-rubio-and-his-team-assess-the-damage-from-062641456.html" target="new">Marco Rubio and his team assess the damage from his duel with Chris Christie »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/rubio-starts-digging-out-after-debate-debacle-191921538.html" target="new">Rubio starts digging out after debate debacle »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/if-trump-wins-he-has-1367322603880502.html" target="new">If Trump wins, he has Christie to thank »</a></p> 
+</p>
+</li>
+ 
+ 
+         
+<LI data-date="07/07/2016">
+<h2>FBI director calls Clinton’s email setup ‘extremely careless’</h2>
+<em>July 7, 2016</em> 
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/fbi-director-james-comey-called-170000600.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:bf42ad3e-490f-3b5e-8a75-794edfaf829f}"></iframe></div>
+<p>	
+There are many who would say that Hillary Clinton dodged a bullet in July when FBI Director James Comey recommended against prosecuting her for mishandling classified information while she was secretary of state — a recommendation that Attorney General Loretta Lynch had already said she would accept.
+</p><p>	
+Obviously, bringing a case against her would have been much worse, probably fatal, for her campaign, just weeks before she was to accept the Democratic nomination. But Comey earned no gratitude from her aides over the way he coupled a legal exoneration with a <a target="peopleplacesmoments_external" href="https://www.fbi.gov/news/pressrel/press-releases/statement-by-fbi-director-james-b-comey-on-the-investigation-of-secretary-hillary-clinton2019s-use-of-a-personal-e-mail-system" target="new">pointed criticism</a> of how Clinton ran her office: “Although we did not find clear evidence that Secretary Clinton or her colleagues intended to violate laws governing the handling of classified information, there is evidence that they were extremely careless in their handling of very sensitive, highly classified information.”
+</p><p>	
+And if she dodged a bullet, there was no denying that she’d loaded the gun herself, with her decision at the outset of her tenure to use a personal email address on a private server rather than her official government one. Her inability to give a convincing and consistent explanation for that arrangement, and the deletion of tens of thousands of emails from her server just as they were being sought for a Congressional investigation has haunted her entire campaign.  
+</p><p>	
+The question is whether any of this rose to the level of a crime. “There is evidence of potential violations of the statutes regarding the handling of classified information,” Comey said. But, he added, “our judgment is that no reasonable prosecutor would bring such a case.” Previous prosecutions for mishandling classified information involved exacerbating circumstances, such as “intentional misconduct, or indications of disloyalty to the United States or efforts to obstruct justice. We do not see those things here.”
+</p><p>	
+That didn’t satisfy Donald Trump, who said at a rally in Florida on Oct. 13 that Comey "let her off the hook while other lives, including Gen. [David] Petraeus and many others, have been destroyed for doing far, far less. This is a conspiracy against you, the American people, and we cannot let this happen or continue.”
+</p><p>	
+But Comey, in testimony at a congressional hearing, had already dismissed the comparison with Petraeus, who pled guilty to a misdemeanor in 2015 and was sentenced to a fine and probation. Petraeus, he noted, had taken “a vast quantity of information,” including top-secret codes, to share with his mistress, who also wrote his biography, and then lied about it to the FBI. “That is a perfect illustration of the kind of cases that get prosecuted,” Comey said. “In my mind, it illustrates importantly the distinction to this (Clinton) case.”
+</p><p>	
+But that didn’t stop the chants that have been heard at Trump rallies all through the campaign: “Lock her up!”<i>&mdash; By Jerry Adler</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/fbi-comey-house-testify-clinton-000000652.html" target="new">FBI Director James Comey on Hillary Clinton email probe: 'We didn't find any evil intent' »</a></p>
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/yahoo-news-now-matthew-miller-174519908.html" target="new">Matthew Miller and Daniel Klaidman on FBI director's testimony »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/fbi-comey-no-charges-appropriate-000000895.html" target="new">FBI's Comey: No charges appropriate in Clinton email case »</a></p> 
+</li>
+         
+
+
+<li data-date="09/09/2016">
+<h2>Clinton dubs Trump supporters ‘deplorables’</h2>
+<em>Sept. 9, 2016</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/york-times-obtained-donald-trumps-170000668.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:ad51f70f-da00-3885-8cc1-3dc48a6e386f}"></iframe></div>
+<p>	
+There’s something about being in the presence of wealthy donors that seems to loosen candidates’ tongues. In 2008, it was Barack Obama, riffing at a fundraiser about “bitter” voters clinging “to guns or religion or antipathy to people who aren’t like them.” In 2012, it was Mitt Romney musing at a fundraiser about the “47 percent of the people” who “believe they are victims … believe they are entitled to health care, to food, to housing.” 
+</p><p>	
+In 2016 it was Hillary Clinton’s turn to say something inflammatory at a fundraiser and see it used against her. Speaking at a New York City event aimed at the LGBT community and featuring Barbra Streisand, Clinton memorably gave this “grossly generalistic” assessment:
+</p><p>	
+“You can put half of Trump supporters into what I call the 'basket of deplorables.' Right? Racist, sexist, homophobic, xenophobic, Islamophobic, you name it. And unfortunately there are people like that, and he has lifted them up.” 
+</p><p>	
+She went on, less memorably, to talk about “that other basket of people who feel that the government has let them down, the economy has let them down, nobody cares about them … and they’re just desperate for change.” But the damage was done, and the Trump campaign seized on the remarks within hours, saying they “revealed just how little she thinks of the hard-working men and women of America.”
+</p><p>	
+“Wow, Hillary Clinton was SO INSULTING to my supporters, millions of amazing, hard working people. I think it will cost her at the polls!” Trump tweeted.
+</p><p>	
+The comments violated a cardinal rule of campaigning: Say what you want about your opponent, but never insult the voters. Clinton issued a <a target="peopleplacesmoments_external" href="http://www.politifact.com/truth-o-meter/article/2016/sep/11/context-hillary-clinton-basket-deplorables/" target="new">statement</a> the next day with the awkward justification that she got her fractions wrong:
+</p><p>	
+“Last night I was ‘grossly generalistic,’ and that's never a good idea. I regret saying ‘half’ -- that was wrong.” 
+ </p><p>	
+And Trump, for his part, took the high road, tweeting:
+</p><p>	
+"While Hillary said horrible things about my supporters, and while many of her supporters will never vote for me, I still respect them all!"
+</p><p>	
+Whatever the long-term effects of the gaffe, it provided a reminder to all future candidates of a lesson David Axelrod, the chief strategist of Obama’s first presidential run, learned the hard way:
+</p><p>	
+<a target="peopleplacesmoments_external" href="https://twitter.com/davidaxelrod/status/774447327079649280?ref_src=twsrc%5Etfw" target="new">“Fundraiser remarks are treacherous things.</a>”&nbsp; 
+<i>&mdash; By Jerry Adler</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/clinton-camp-doubles-down-on-core-of-deplorables-claim-191321555.html" target="new">Clinton camp doubles down on core of 'deplorables' claim »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/clinton-trump-deplorables-ad-143958232.html" target="new">New Clinton ad hits back at Trump over 'deplorables' attack »</a></p> 
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/clinton-trump-trade-barbs-deplorable-162819240.html" target="new">Clinton and Trump trade barbs in 'deplorable' ads »</a></p> 
+</li>
+
+
+
+<!---This One Is Done  Needs Related Links----> 
+            
+<li data-date="11/09/2016">
+<h2>Clinton stumbles at 9/11 memorial</h2>
+<em>Sept. 11, 2016</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/york-times-obtained-donald-trumps-170000668.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:ad51f70f-da00-3885-8cc1-3dc48a6e386f}"></iframe></div>
+<p>	
+It was the stumble heard, or at least seen, around the world: Hillary Clinton, leaving the 9/11 memorial service early, nearly collapsing into the arms of her security detail and needing to be half-carried into her car. It came at the worst possible time for her campaign, following weeks of heated innuendo, primarily by Fox News’ Sean Hannity, about Clinton’s health. 
+</p><p>	
+It’s a matter of record that Clinton, dehydrated as a result of a stomach virus, fainted and fell at her home in 2012, hitting her head and suffering a concussion and a blood clot that left her with vision problems for several months. On that foundation, Hannity and other right-wing media sources built a tower of speculation — that Clinton had trouble climbing stairs, that her “weird pauses” and “wild, out-of-control movements” signified neurological problems, that she needed an injector pen to head off seizures. (The device carried by a Secret Service agent turned out to be a small flashlight.) Author Ed Klein went even further, claiming that Clinton “<a target="peopleplacesmoments_external" href="http://www.thegatewaypundit.com/2016/09/author-ed-klein-hillary-frequently-faints-huma-brings-cold-compresses-head-video/" target="new">frequently faints or swoons</a>” at her home, an observation he attributed to unnamed “friends and associates,” raising the question of who, in Clinton’s notoriously protective inner circle, would share this information with Klein, a well-known Clinton antagonist. 
+</p><p>	
+And then she stumbled. As often happened in the campaign, her aides made matters worse by putting out a belated statement attributing the spell to “dehydration,” before admitting that she had been diagnosed days earlier with pneumonia. Even sympathetic commentators like David Axelrod were put off by how it was handled. “Antibiotics can take care of pneumonia,” he tweeted. “What’s the cure for an unhealthy penchant for privacy that repeatedly creates unnecessary problems?"
+</p><p>	
+To the Trump campaign, of course, it was a godsend. Donald Trump’s initial reaction was to wish her a speedy recovery, but soon afterward, he reverted to form with a remark intended to let listeners infer the worst, without saying anything provably false: “They say pneumonia on Friday, but she was coughing very, very badly a week ago, and even before that, if you remember. This wasn’t the first time. So, it’s very interesting to see what is going on.” 
+</p><p>	
+As the campaign moved into its final weeks, Trump kept up the attacks on Clinton’s “stamina,” <a target="peopleplacesmoments_external" href="http://www.cnn.com/videos/politics/2016/10/02/donald-trump-mocks-clinton-health-sot-newday.cnn" target="new">mocking her stumble</a> on the podium at a rally and releasing an <a target="peopleplacesmoments_external" href="https://www.youtube.com/watch?v=-O4JUE7Lu30" target="new">ad</a> about it with the ominous tagline “Don’t let her fail us again.” And at a rally in early October, he speculated on this baroque, if hypothetical, <a target="peopleplacesmoments_external" href="http://origin-nyi.thehill.com/blogs/ballot-box/presidential-races/300943-trump-if-clinton-goes-down-in-china-theyll-just-leave-her" target="new">scenario</a>:
+</p><p>	
+“When she’s over in China, if she goes down, in Tiananmen Square, they’ll just leave her there.”
+</p><p>	
+It is true, of course, that Clinton is one of the oldest people ever to run for president; on Oct. 26, she turns 69, making her one year younger than Trump.&nbsp;
+<i>&mdash; By Jerry Adler</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Slideshow:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/remembering-9-11-142619263.html" target="new">Remembering 9/11 »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/clinton-departs-911-ceremony-after-feeling-overheated-campaign-says-153431902.html" target="new">Clinton departs 9/11 ceremony after falling ill, campaign confirms she was diagnosed with pneumonia »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/clinton-on-pneumonia-i-didnt-think-itd-be-a-big-deal-115048920.html" target="new">Clinton on pneumonia: I didn't think it'd be a big deal »</a></p> 
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/hillary-clinton-tells-anderson-cooper-152359071.html" target="new">Hillary Clinton tells CNN she didn't think her pneumonia diagnosis 'was going to be that big of a deal' »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trump-hillary-clinton-pneumonia-car-230131260.html" target="new">Trump unloads on Clinton after tough debate: 'She can't even make it to her car' »</a></p> 
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-mocks-clintons-health-those-220306632.html" target="new">Trump mocks Clinton's health: 'All those days off and she can't even make it to her car' »</a></p> 
+</li>
+ 
+            
+<!---This One Is Done  Needs Related Links----> 
+
+<LI data-date="26/09/2016">
+<h2>Trump fat-shames a former Miss Universe</h2>
+<em>Sept. 26, 2016</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/york-times-obtained-donald-trumps-170000668.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:ad51f70f-da00-3885-8cc1-3dc48a6e386f}"></iframe></div>
+<p>	
+Donald Trump never saw it coming, but with his limitless confidence in his ability to bluster through any confrontation, he didn’t think he needed to. Hillary Clinton laid the trap expertly, although it took some rhetorical contortions to drag it into place, just before the end of the first presidential debate.
+</p><p>	
+It began with a question from Lester Holt about Trump’s remark that Clinton lacked a “presidential look,” which Trump may have sensed was dangerous territory, so he responded with one of his favorite attack lines, her lack of “stamina.” Clinton turned the subject back to looks, and Trump’s proclivity for calling women “pigs, slobs and dogs.”
+</p><p>	
+“And one of the worst things he said,” she went on triumphantly, “was about a woman in a beauty contest. … He called this woman ‘Miss Piggy.’ Then he called her ‘Miss Housekeeping,’ because she was Latina. Donald, she has a name.”
+</p><p>	
+And Trump, coming across like a Perry Mason villain who has just been shown the murder weapon on the witness stand, blurts out: 
+</p><p>	
+“Where did you find this? Where did you find this?”
+</p><p>	
+Her name is Alicia Machado, a Venezuelan-born actress who was Miss Universe in 1996, the year Trump bought the contest and appointed himself executive producer. As described in a <a target="peopleplacesmoments_external" href="http://www.thewrap.com/miss-universe-alicia-machado-donald-trump-hillary-clinton-ad/" target="new">video</a> the Clinton campaign had prepared in advance and released right afterward, she had gained weight after winning the contest and no longer met Trump’s exacting standards of beauty. So he berated and insulted her into dieting, inviting the media to film her in the gym. “She weighed 118 pounds or 117 pounds and she went up to 160 or 170, so this is somebody who likes to eat,” Trump smirked on camera.
+</p><p>	
+“It turned into a circus, ‘The Fat Miss Universe,’” Machado says in the film.
+</p><p>	
+As CNN commentator Ana Navarro <a target="peopleplacesmoments_external" href="https://twitter.com/ananavarro/status/780854666942935041" target="new">wrote on Twitter</a>, “hell hath no fury like a Latina who’s been called fat.” And yet Trump seemed to think this was a winning issue for him, phoning in to Fox News the morning after the debate to continue his diatribe about “the massive amount of weight” Machado had gained. Three days later, in what has been called the “3 a.m. tweetstorm,” he sent out a series of Twitter messages in the middle of the night, urging his followers to check out a “sex tape” of Machado. Conservative media dug out <a target="peopleplacesmoments_external" href="http://www.economist.com/node/604213" target="new">some details of her past</a> that suggested she fell short of being an ideal role model for America’s young girls, but a sex tape wasn’t among them. 
+</p><p>	
+As the Clinton campaign rolled out a powerful ad that juxtaposed Trump’s demeaning comments about women with images of young girls staring into mirrors,  Republicans were seeing grim confirmation of their suspicions that their candidate was his own worst enemy.
+</p><p>	
+“<a target="peopleplacesmoments_external" href="http://www.nytimes.com/2016/09/29/us/politics/alicia-machado-presidential-race.html" target="new">It makes no sense</a>,” Frank Luntz, a GOP strategist, said. He said that focus groups that he had conducted had shown that Mr. Trump should be hammering Mrs. Clinton on issues like the national debt and the Islamic State.
+“Instead, he’s in a fight with a beauty queen.”<i>&mdash; By Jerry Adler</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trump-tweets-alicia-machado-134018710.html" target="new">Trump unleashes early-morning Twitter tirade against 'disgusting' Alicia Machado »</a></p>
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/yahoo-news-now-trump-latest-152450408.html" target="new">Yahoo News Now: Trump's latest incendiary comments on social media »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/alicia-machado-instagram-donald-trump-162627092.html" target="new">Alicia Machado fires back at Trump's 'campaign of hate' »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/beauty/did-alicia-machado-breach-weight-clause-as-trump-campaign-claims-190821594.html" target="new">Did Alicia Machado breach 'weight clause' as Trump campaign claims? »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/preparation-pays-off-for-clinton-in-debate-match-up-060946666.html" target="new">Preparation pays off for Clinton in debate matchup »</a></p>
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/hillary-clinton-calls-donald-trump-030636449.html" target="new">Hillary Clinton calls Donald Trump out for his comments about women »</a></p>
+</li>
+         
+        
+<!---This One Is Done  Needs Related Links----> 
+         
+<LI data-date="01/10/2016">
+<h2>Trump’s 1995 tax information leaked to the New York Times</h2>
+<em>Oct. 1, 2016</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/york-times-obtained-donald-trumps-170000668.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:ad51f70f-da00-3885-8cc1-3dc48a6e386f}"></iframe></div>
+<p>	
+It was the Rosebud moment in the saga of Donald Trump, the long-awaited bombshell of the 2016 campaign, for which New York Times executive editor Dean Baquet was <a target="peopleplacesmoments_external" href="http://money.cnn.com/2016/09/12/media/ny-times-editor-jail-donald-trump-taxes/" target="new">willing to go to jail</a> if he had to. But in the end, it raised as many questions as it answered.
+</p><p>
+It is, of course, the now famous leak of <a target="peopleplacesmoments_external" href="http://money.cnn.com/2016/09/12/media/ny-times-editor-jail-donald-trump-taxes/" target="new">three pages from Trump’s 1995 tax returns</a>, which the Times published on October 2, after receiving them anonymously in the mail and verifying their authenticity with his former accountant. 
+</p><p>
+Journalists — and political rivals — had been asking to see Trump’s returns ever since he entered the race, a routine disclosure for every presidential nominee since at least 1980. He had made <a target="peopleplacesmoments_external" href="http://www.nytimes.com/politics/first-draft/2016/02/22/donald-trump-says-hell-release-tax-returns-at-some-point/" target="new">vague promises</a> that “we’ll get them out at some point, probably,” before changing his mind, saying his taxes were being audited and would only be made public when the IRS audit was finished — which, as former IRS commissioner Fred Goldberg wrote, might well be never.  
+</p><p>
+Nothing, including an audit, is preventing him from releasing his returns, leading to speculation about what he was trying to hide. Hillary Clinton summarized four possible explanations at the first presidential debate: he’s not as rich as says he is; he doesn’t give away much money to charity; his business dealings, especially with foreign banks or partners, could be embarrassing for a potential president of the United States; or he paid little or nothing in federal income taxes — a possibility Trump seemed to implicitly endorse when he interjected “that makes me smart.”
+</p><p>
+Just how smart was hinted at in the documents — just a single page from each of three 1995 state returns — which showed a jaw-dropping business loss for that year of nearly $916 million. As the Times pointed out, a loss of that amount could offset an equivalent amount of income for as long as 18 years.  
+</p><p>
+The Trump campaign neither confirmed nor denied the Times story, but put its own spin on it with a statement saying “Mr. Trump is a highly skilled businessman who has a fiduciary responsibility to his business, his family and his employees to pay no more tax than legally required.” 
+At issue, of course, were his personal taxes, for which he had no “fiduciary responsibility” to anyone. In the second presidential debate, moderator Anderson Cooper tried to pin Trump down on that question, leading to this exchange:
+</p><p>
+<strong>COOPER:</strong> <i>So can you — can you say how many years you have avoided paying personal federal income taxes?
+</i></p>
+<p><strong>TRUMP:</strong> <i>No, but I pay tax, and I pay federal tax too. But I have a write-off, a lot of it’s depreciation, which is a wonderful charge. I love depreciation. </i></p>
+<p>
+The issue dominated the news for a week, more or less — right up until the release of the next bombshell, the tape of Trump boasting about groping and forcing himself on attractive women — and accelerated a slide in the polls that began with the first debate. 
+</p><p>
+But it didn’t come close to resolving the many open questions about Trump’s business dealings — questions that now may never be answered. Depending on what happens Nov. 8, it might not matter.<i>&mdash; By Jerry Adler</i></p> 
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-nytimes-taxes-18-publish-legal-161316688.html" target="new">Trump responds to New York Times report he may have avoided paying federal taxes for 18 years »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trump-tax-returns-speech-224637153.html" target="new">'I am working for you now': Trump delivers lengthy defense after tax filing leaks »</a></p> 
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trump-says-understands-benefited-211953690.html" target="new">Donald Trump says he understands and has benefited from America's 'unfair' tax system »</a></p> 
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trumps-taxes-are-telling-us-something-090043620.html" target="new">Trump's taxes are telling us something »</a></p> 
+</li>
+
+<!---This One Is Done  Needs Related Links----> 
+                             
+<LI data-date="07/10/2016">
+<h2>WikiLeaks dumps thousands of Clinton campaign emails</h2>
+<em>Oct. 7, 2016</em>
+<div class='video-holder'><iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/donald-trumps-lewd-comments-women-170000352.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:f50c1aa5-e0e5-3144-b7b7-42c6c9a38cc9}"></iframe></div>
+<p>What does WikiLeaks have? The question buzzed around U.S. political circles for weeks after founder Julian Assange, who has been holed up in the Ecuadorian Embassy in London to avoid rape charges in Sweden, teased reporters about  <a target="peopleplacesmoments_external" href="http://www.thegatewaypundit.com/2016/08/julian-assange-interesting-serious-wikileaks-info-hillary-clinton-yet-released-video/ " target="new">“interesting and serious”</a> documents his group was about to publish. Then, on Oct. 7, WikiLeaks unloaded. “RELEASE: The Podesta Emails,” the group tweeted at 4:32 p.m., linking to the first tranche of thousands of private messages sent by and to John Podesta, Hillary Clinton’s campaign chairman. It was a pivotal moment in the 2016 election. The Clinton campaign — and the U.S. intelligence community — blamed the dump on the fruits of a state-sponsored Russian cyberattack. Still, the emails provided a revealing and embarrassing window into the inner workings of the Clinton campaign. 
+</p><p>The biggest headline: verbatim excerpts, flagged as potentially problematic by campaign aides, from the high-dollar speeches Clinton gave to Goldman Sachs and other big banks — the very speeches whose transcripts she had refused to release when Bernie Sanders pounded her over them during the Democratic primary. In some cases, the excerpts showed exactly what Sanders supporters (and many in the media) had always suspected: Clinton was far cozier with Wall Street bankers behind closed doors than she was in public. “The people that know the industry better than anybody are the people that work in the industry,” she said in one talk about crafting financial regulations. “You need both a public and private position,” she said in another. And there was plenty more on other fronts, including embarrassing tiffs among Clinton insiders. After Chelsea Clinton accused Doug Band, one of her father’s top aides, of “hustling” corporate clients while working for the Clinton Foundation, Band fired back: Chelsea was acting like a “spoiled brat kid,” he wrote.
+</p><p>
+ The emails, had they come earlier in the year, would have provided plentiful of ammunition for Clinton’s critics — and would have made her path to the nomination even rockier than it was. But since they came late in the political season, and at a time when much of the media was obsessing over Donald Trump’s sexual peccadillos, the Clinton campaign was able to finesse the emails (mostly by refusing to authenticate them, given the Russians’ apparent role as intermediaries.) Still, they had an impact, underscoring Clinton’s vulnerabilities as a candidate. And, for better or worse, they helped to restore WikiLeaks — a rogue operation that traffics in all sorts of stolen documents — as a player to be feared on the world stage.<i>&mdash; By Michael Isikoff</i></p> 
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/clinton-adviser-podesta-connects-trump-campaign-wikileaks-011921606--election.html" target="new">Clinton adviser Podesta connects Trump campaign to WikiLeaks »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/clinton-and-dnc-face-new-email-attacks-in-wake-of-wikileaks-dump-200106265.html" target="new">Clinton and DNC face new email attacks in wake of WikiLeaks dump »</a></p> 
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/bernie-sanders-campaign-manager-leaked-163337312.html" target="new">Bernie Sanders campaign manager on leaked Clinton emails: 'We wish, obviously, we had the emails earlier in the process' »</a></p> 
+</li>
+
+
+<!---This One Is Done  Needs Related Links---->            
+         
+<LI data-date="12/10/2016">
+<h2>‘Grab them by the p***y. You can do anything.’</h2>
+<em>Oct. 7, 2016</em>
+<div class='video-holder'>
+<iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/donald-trumps-lewd-comments-women-170000352.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:f50c1aa5-e0e5-3144-b7b7-42c6c9a38cc9}"></iframe></div>
+<p>The Washington Post article was posted on Friday afternoon, Oct. 7, and for a few minutes work stopped dead in offices all over the country as Americans absorbed the unimaginable spectacle of a presidential candidate boasting about groping and forcibly kissing women, taking advantage of his stature as a “star.”
+</p><p>
+As the world now knows, the Post had obtained in-house video from 2005 of Trump bantering with Billy Bush of “Access Hollywood” as they rode together for a taping of a soap opera in which Trump made a cameo appearance.
+</p><p>
+“I did try and f*** her,” Trump says of one woman. “I moved on her like a bitch, but I couldn’t get there. And she was married.” He talked about his compulsion to kiss beautiful women, adding, “When you’re a star, they let you do it … Grab them by the p****. You can do anything.”
+</p><p>
+The gravity of this offense, and the impossibility of pretending he hadn’t actually said it, was underscored when Trump released an unprecedented video apology that very night. “I said it, I was wrong, and I apologize,” he said soberly. “I’ve never said I’m a perfect person, nor pretended to be someone that I’m not.”
+</p><p>
+For 24 hours or so, it looked as if Trump’s enemies in the Republican Party had finally found a stake they could impale him on. House Speaker Paul Ryan, the rubber band attaching him to Trump stretched almost to the breaking point, pronounced himself “sickened” by the comments and disinvited the candidate from a campaign event in Wisconsin. Trump’s running mate, Indiana Gov. Mike Pence, went into radio silence while election lawyers filled the airwaves with speculation about how Trump could be deposed as the Republican standard-bearer — a virtual impossibility as early voting had already begun in some states. 
+</p><p>
+With the second presidential debate about to take place on Sunday, the party hunkered down and hoped for the best. Trump had, over the months, shown himself capable of amazing resurrections even from the gravest self-inflicted wounds. 
+</p><p>
+But it was the debate itself that triggered a second wave of revelations, when Trump, after ducking several questions from moderator Anderson Cooper, denied that he had actually done what he had boasted about. 
+</p>
+<p>&nbsp;<br/>
+<strong>Cooper:</strong> Just for the record, though, are you saying that what you said on that bus 11 years ago that you did not actually kiss women without consent or grope women without consent?<br>
+<strong>Trump: </strong>I have great respect for women. Nobody has more respect for women than I do.<br>
+<strong>Cooper:</strong> So, for the record, you’re saying you never did that?<br>
+<strong>Trump:</strong> I’ve said things that, frankly, you hear these things I said. And I was embarrassed by it. But I have tremendous respect for women.<br>
+<strong>Cooper:</strong> Have you ever done those things?<br>
+<strong>Trump:</strong> And women have respect for me. And I will tell you: No, I have not.<br/>
+&nbsp;</p>
+<p>
+At that very moment, in living rooms in Palm Beach, Fla., in Manhattan, and possibly other places, women allegedly erupted in outrage. Mindy McGillivray, who had been a photographer’s assistant during an event at Trump’s Mar-a-Lago resort 13 years earlier, told the <a target="peopleplacesmoments_external" href="http://www.palmbeachpost.com/news/palm-beach-post-exclusive-local-woman-says-trump-groped-her/w5ii48gwdJY9htsLl88GcP/" target="new">Palm Beach Post</a> she had jumped up and yelled at the TV: “You liar!” Standing in a group with Trump and Melania, his fiancée at the time, McGillivray felt his hand on her buttocks.
+</p><p>
+“I wanted to punch the screen,” recalled Jessica Leeds, who told the <a target="peopleplacesmoments_external" href="http://www.nytimes.com/2016/10/13/us/politics/donald-trump-women.html" target="new">New York Times</a> she had been sitting next to Trump on an airplane more than three decades earlier when he grabbed her breasts and tried to put his hand up her skirt.
+</p><p>
+By the end of the following week, about a dozen women had come forward with allegations of being assaulted by Trump — all of which he denied, casting himself as the victim of, to paraphrase, a vast left-wing conspiracy by the Clinton campaign, the media, and women desperate to get on television. If he was hoping to repair his reputation with women, he probably didn’t do himself a lot of good with <a target="peopleplacesmoments_external" href="http://www.vox.com/policy-and-politics/2016/10/13/13272920/trump-sexual-assault-natasha-stoynoff" target="new">comments</a> that implied his accusers weren’t attractive enough for him to have bothered with. 
+</p><p>
+Billy Bush, a cousin of Trump’s vanquished rival Jeb Bush, who had moved on to the “Today” show, was <a target="peopleplacesmoments_external" href="http://www.usmagazine.com/celebrity-news/news/billy-bush-sad-about-trump-tape-scandal-today-show-exit-w445538" target="new">fired</a> by NBC.<i>&mdash; By Jerry Adler</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/video-emerges-of-donald-trump-saying-shockingly-lewd-things-in-2005-205256001.html" target="new">Donald Trump issues apology statement after 2005 video reveals shocking comments about women »</a></p>
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trump-apologizes-lewd-comments-043329367.html" target="new">Donald Trump apologizes for lewd comments from 2005, calls it a distraction »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/after-trumps-terrible-friday-get-ready-for-a-nasty-second-debate-072900038.html" target="new">After Trump's terrible week, get ready for a nasty second debate »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-ill-talk-even-more-about-bill-clintons-accusers-if-more-lewd-tapes-are-released-220854900.html" target="new">Trump: I'll talk even more about Bill Clinton's accusers if more lewd tapes are released »</a></p>
+<!--<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-doubles-down-bill-clinton-211524585.html" target="new">Trump doubles down on Bill Clinton, videotapes, and even Chappaquiddick »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-accusers-sexual-assault-153559631.html" target="new">The women who have accused Donald Trump »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-tapes-nbc-mgm-burnett-apprentice-petitions-171445351.html" target="new">Amid rumors of more lewd tapes, groups demand release of 'Apprentice' footage »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/why-are-so-many-trump-accusers-suddenly-coming-forward-now-222248534.html" target="new">Why are so many Trump accusers suddenly coming forward now? »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/woman-says-trump-reached-up-her-skirt-at-new-york-nightclub-182442015.html" target="new">Former model alleges Trump put hand up her skirt; 'Apprentice' star says he groped, kissed her »</a></p>
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/former-apprentice-contestant-accuses-donald-200132239.html" target="new">Former 'Apprentice' contestant accuses Donald Trump of sexual harassment  »</a></p>-->
+</li>
+         
+         
+
+<!---This One Is Done  Needs Related Links---->   
+     
+<LI data-date="19/10/2016">
+<h2>Trump refuses to say whether he’ll accept result of the election</h2>
+<em>Oct. 19, 2016</em>
+<div class='video-holder'>
+<iframe width="400" height="226" scrolling='no' frameborder='0' src="https://www.yahoo.com/news/donald-trump-keep-suspense-accepting-170000172.html?format=embed&player_autoplay=false" allowtransparency="true" data-yom-embed-source="{media_id_1:1817c353-a8f0-315b-9842-37f717b265ac}">
+</iframe></div><p>
+In an election that was all about Donald J. Trump, it was a moment that summed up what Trump himself was all about.
+</p><p>
+For days the GOP nominee — down in the polls, denounced by his fellow Republicans and fending off roughly a dozen different accusations of sexual misconduct — had been railing from the stump against what he described, without evidence, as a “rigged election.”
+</p><p>
+But no one had yet asked Trump the obvious question: Are you really prepared to break with centuries of proud democratic tradition and become the first presidential nominee in U.S. history to obstruct the peaceful transition of power?
+</p><p>
+Until the final debate, on Oct. 19, when the moderator, Chris Wallace, did pose that question.
+</p><p>
+“Your running mate Governor Pence pledged on Sunday that he and you (his words), ‘will absolutely accept the result of this election,’” Wallace said in Las Vegas. “Today, your daughter Ivanka said the same thing. I want to ask you here on the stage tonight: Do you make the same commitment that you’ll absolutely accept the result of the election?”
+</p><p>
+“I will look at it at the time,” Trump snapped. “I’m not looking at anything now. I'll look at it at the time.”
+</p><p>
+The audience actually gasped.
+</p><p>
+Wallace asked again, just to be sure.
+</p><p>
+“There is a tradition in this country,” he stammered, “that the loser concedes to the winner, and the country comes together, in part for the good of the country. Are you saying you’re not prepared now to commit to that principle?”
+</p><p>
+Again, Trump declined.
+</p><p>
+“I’ll keep you in suspense,” the mogul said with a smirk. “OK?”
+</p><p>
+In Las Vegas, Trump rambled on about his reasons for rejecting this core pillar of American democracy: because of the “corrupt media”; the “millions of people [who] are registered to vote who shouldn’t be registered to vote”; the fact that, in his expert legal opinion, Clinton “should not be allowed to run” in the first place.
+</p><p>
+But these weren’t Trump’s real reasons. Trump is a man who has spent his entire life insisting to himself, and to others, that he <i>simply cannot lose</i>. Other people are “losers.” He is a winner. Always. “We’re gonna win so much you’ll get tired of winning!” Trump would <a target="peopleplacesmoments_external" href="https://www.youtube.com/watch?v=daOH-pTd_nk">bellow in his speeches</a>. “And you’ll say, ‘Please, please, it’s too much winning! We can’t take it anymore!’”
+</p><p>
+In business, Trump learned to do whatever it took to “win,” or at least to convince himself and others that he was winning: <a target="peopleplacesmoments_external" href="http://www.wsj.com/articles/trumps-father-helped-gop-candidate-with-numerous-loans-1474656573">borrowing $14 million from his developer father</a>; <a target="peopleplacesmoments_external" href="http://www.wsj.com/articles/donald-trumps-business-plan-left-a-trail-of-unpaid-bills-1465504454">stiffing contractors</a>; <a target="peopleplacesmoments_external" href="http://www.nytimes.com/2016/10/10/us/politics/donald-trump-taxes.html?_r=0">not paying federal income tax</a>; the list goes on. The end — building the brand, making a profit — justified the means.
+</p><p>
+But the presidency is different. In public service, some means cannot be justified, regardless of the end. Trump either never grasped, or never respected, the distinction. Over and over, he boasted that he would defy the law, the Constitution, the international order, and the norms of democratic society in order to help America “win.”
+</p><p>
+He would <a target="peopleplacesmoments_external" href="http://www.cnn.com/2015/12/02/politics/donald-trump-terrorists-families/">kill the wives and children of terrorists</a>. He would <a target="peopleplacesmoments_external" href="http://www.huffingtonpost.com/entry/trump-torture-waterboarding_us_5775d740e4b04164640f6597">torture enemy combatants</a>. He would <a target="peopleplacesmoments_external" href="http://www.newsweek.com/trump-demands-protection-money-allies-442841">demand “protection money” from NATO allies</a>. He would <a target="peopleplacesmoments_external" href="http://www.cnn.com/2015/12/07/politics/donald-trump-muslim-ban-immigration/">ban Muslims from entering the United States because they were Muslims</a>. He would <a target="peopleplacesmoments_external" href="http://www.politico.com/blogs/on-media/2016/02/donald-trump-libel-laws-219866">“open up” libel laws to better prosecute people who criticized him</a>. He would <a target="peopleplacesmoments_external" href="https://www.washingtonpost.com/opinions/its-not-the-locker-room-talk-its-the-lock-her-up-talk/2016/10/13/9dd5fbea-9172-11e6-9c85-ac42097b8cc0_story.html?utm_term=.96aa5b2787a1">put his primary political opponent in jail</a>. Ultimately, Trump’s pathology — the deep, dark fear of “losing” that had once served his brand so well — wound up making him sound, in politics, like a petty dictator.
+</p><p>
+“I will look at it at the time” was the culmination of all that: a psychological coping mechanism; a <a target="peopleplacesmoments_external" href="http://www.nytimes.com/2016/10/21/arts/television/third-presidential-debate-donald-trump-hillary-clinton.html">rallying cry for Trump’s much-rumored new business venture</a>; the most anti-democratic thing that any potential president has ever said. Trump assumed he was keeping the American people in suspense. But they were already pretty sure how his candidacy would end.<i>&mdash; By Andrew Romano</i></p>
+<p>	
+<h5>RELATED LINKS</h5>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-refuses-to-say-whether-he-will-accept-election-results-024518122.html" target="new">Trump refuses to say that he will accept election results »</a></p>
+<p><strong>Video:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trump-accepting-results-election-024904676.html" target="new">Donald Trump on accepting the results of the election: 'I will look at it at the time' »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/donald-trumps-sons-say-the-election-is-plagued-by-cheating-and-voter-fraud-054339785.html" target="new">Donald Trump's sons say the election is plagued by 'cheating' and 'voter fraud' »</a></p>
+<p><strong>Story:</strong> <a target="peopleplacesmoments_external" href="https://www.yahoo.com/news/trump-campaign-manager-well-accept-the-results-of-the-election-041343337.html" target="new">Trump campaign manager: 'We'll accept the result' of the election »</a></p>
+</li>
+         
+
+
+		</ol>
+	</div> <!-- .events-content -->
+</section>
+	
+<script src="https://s.yimg.com/dh/ap/politics/interactive/16_in_2016/jquery-2.1.4.js"></script>
+<script src="https://s.yimg.com/dh/ap/politics/interactive/16_in_2016/jquery.mobile.custom.min.js"></script>
+<script>
+jQuery(document).ready(function($){
+  var timelines = $('.cd-horizontal-timeline');
+
+  console.log("DFSKLAR 6:48"); 
+
+  // SKLARDFSKLAR: Change this to enforce a min distance between components
+  var eventsMinDistance = 118;
+  var eventsMaxDistance = 180;
+  var forcedLeftSubtract = -300;
+
+  var handle_resize = function() {
+    var ratio = 1;
+    if (window.devicePixelRatio) {
+      ratio = window.devicePixelRatio;
+    }
+    ratio = 1;  // the above really does not work on iphone
+    var ww = $('body').width() * ratio;
+    var sw = screen.width * ratio;
+    if (sw < ww) {
+       console.log(sw);
+       console.log(ww);
+       var $dynabody = $('.dynamic-body');
+       $dynabody.css('width', (sw-25)+'px');
+    }
+  };
+
+  handle_resize();
+
+  $( window ).resize(handle_resize);
+
+	(timelines.length > 0) && initTimeline(timelines);
+
+
+  function stopAllVideos($root) {
+        console.log($root);
+        // Easy way to stop a video is to simply reload the SRC attribute of the iframe.
+        $root.find('iframe').each(function() {
+            var origSrc = $(this).attr('src');
+            // console.log("Autostop on video: " + origSrc);
+            $(this).attr('src', origSrc);
+        });
+  }
+
+
+	function initTimeline(timelines) {
+		timelines.each(function(){
+			var timeline = $(this),
+				timelineComponents = {};
+			//cache timeline components 
+			timelineComponents['timelineWrapper'] = timeline.find('.events-wrapper');
+			timelineComponents['eventsWrapper'] = timelineComponents['timelineWrapper'].children('.events');
+			timelineComponents['fillingLine'] = timelineComponents['eventsWrapper'].children('.filling-line');
+			timelineComponents['timelineEvents'] = timelineComponents['eventsWrapper'].find('a');
+			timelineComponents['timelineDates'] = parseDate(timelineComponents['timelineEvents']);
+			timelineComponents['eventsMinLapse'] = minLapse(timelineComponents['timelineDates']);
+			timelineComponents['timelineNavigation'] = timeline.find('.cd-timeline-navigation');
+			timelineComponents['eventsContent'] = timeline.children('.events-content');
+
+			//assign a left postion to the single events along the timeline
+			setDatePosition(timelineComponents, eventsMinDistance);
+			//assign a width to the timeline
+			var timelineTotWidth = setTimelineWidth(timelineComponents, eventsMinDistance);
+			//the timeline has been initialize - show it
+			timeline.addClass('loaded');
+
+			//detect click on the next arrow
+			timelineComponents['timelineNavigation'].on('click', '.next', function(event){
+				event.preventDefault();
+                // DFSKLARD: I want this to move to next story unconditionally, not just slide the timeline bar
+				showNewContent(timelineComponents, timelineTotWidth, 'next');
+				//updateSlide(timelineComponents, timelineTotWidth, 'next');
+			});
+
+			//detect click on the prev arrow
+			timelineComponents['timelineNavigation'].on('click', '.prev', function(event){
+				event.preventDefault();
+                // DFSKLARD: I want this to move to prev story unconditionally, not just slide the timeline bar
+				showNewContent(timelineComponents, timelineTotWidth, 'prev');
+				// updateSlide(timelineComponents, timelineTotWidth, 'prev');
+			});
+            
+			//detect click on a single event - show new event content
+			timelineComponents['eventsWrapper'].on('click', 'a', function(event){
+				event.preventDefault();
+				timelineComponents['timelineEvents'].removeClass('selected');
+				$(this).addClass('selected');
+				updateOlderEvents($(this));
+				updateFilling($(this), timelineComponents['fillingLine'], timelineTotWidth);
+				updateVisibleContent($(this), timelineComponents['eventsContent']);
+			});
+
+
+			//ON SWIPE, SHOW NEXT/PREV EVENT CONTENT
+            /*  *** DISABLED ***
+			timelineComponents['eventsContent'].on('swipeleft', function(){
+				var mq = checkMQ();
+				( mq == 'mobile' ) && showNewContent(timelineComponents, timelineTotWidth, 'next');
+			});
+			timelineComponents['eventsContent'].on('swiperight', function(){
+				var mq = checkMQ();
+				( mq == 'mobile' ) && showNewContent(timelineComponents, timelineTotWidth, 'prev');
+			});
+            */
+
+			//keyboard navigation
+			$(document).keyup(function(event){
+				if(event.which=='37' && elementInViewport(timeline.get(0)) ) {
+					showNewContent(timelineComponents, timelineTotWidth, 'prev');
+				} else if( event.which=='39' && elementInViewport(timeline.get(0))) {
+					showNewContent(timelineComponents, timelineTotWidth, 'next');
+				}
+			});
+		});
+	}
+
+
+    
+	function updateSlide(timelineComponents, timelineTotWidth, string) {
+		//retrieve translateX value of timelineComponents['eventsWrapper']
+		var translateValue = getTranslateValue(timelineComponents['eventsWrapper']),
+			wrapperWidth = Number(timelineComponents['timelineWrapper'].css('width').replace('px', ''));
+		//translate the timeline to the left('next')/right('prev') 
+		(string == 'next') 
+			? translateTimeline(timelineComponents, translateValue - wrapperWidth + eventsMinDistance, wrapperWidth - timelineTotWidth)
+			: translateTimeline(timelineComponents, translateValue + wrapperWidth - eventsMinDistance);
+	}
+
+
+
+    
+	function showNewContent(timelineComponents, timelineTotWidth, string) {
+		//go from one event to the next/previous one
+		var visibleContent =  timelineComponents['eventsContent'].find('.selected'),
+			newContent = ( string == 'next' ) ? visibleContent.next() : visibleContent.prev();
+
+		if ( newContent.length > 0 ) { //if there's a next/prev event - show it
+            stopAllVideos($(visibleContent));
+			var selectedDate = timelineComponents['eventsWrapper'].find('.selected'),
+				newEvent = ( string == 'next' ) ? selectedDate.parent('li').next('li').children('a') : selectedDate.parent('li').prev('li').children('a');
+			
+			updateFilling(newEvent, timelineComponents['fillingLine'], timelineTotWidth);
+			updateVisibleContent(newEvent, timelineComponents['eventsContent']);
+			newEvent.addClass('selected');
+			selectedDate.removeClass('selected');
+			updateOlderEvents(newEvent);
+			updateTimelinePosition(string, newEvent, timelineComponents);
+		}
+	}
+
+
+
+	function updateTimelinePosition(string, event, timelineComponents) {
+		//translate timeline to the left/right according to the position of the selected event
+		var eventStyle = window.getComputedStyle(event.get(0), null),
+			eventLeft = Number(eventStyle.getPropertyValue("left").replace('px', '')),
+			timelineWidth = Number(timelineComponents['timelineWrapper'].css('width').replace('px', '')),
+			timelineTotWidth = Number(timelineComponents['eventsWrapper'].css('width').replace('px', ''));
+		var timelineTranslate = getTranslateValue(timelineComponents['eventsWrapper']);
+
+        // DFSKLARD: this does not force scrolling if even a tiny portion of the target obj is visible,
+        // but I want to ensure *most* of the target obj is visible.
+        var sensitivity = 58;
+
+        if( (string == 'next' && (eventLeft+sensitivity) > (timelineWidth - timelineTranslate)) || 
+            (string == 'prev' && (eventLeft < - timelineTranslate)) ) {
+        	translateTimeline(timelineComponents, - eventLeft + timelineWidth/2, timelineWidth - timelineTotWidth);
+        }
+	}
+
+
+
+
+	function translateTimeline(timelineComponents, value, totWidth) {
+		var eventsWrapper = timelineComponents['eventsWrapper'].get(0);
+		value = (value > 0) ? 0 : value; //only negative translate value
+		value = ( !(typeof totWidth === 'undefined') &&  value < totWidth ) ? totWidth : value; //do not translate more than timeline width
+		setTransformValue(eventsWrapper, 'translateX', value+'px');
+/*
+        //update navigation arrows visibility
+		(value == 0 ) ? timelineComponents['timelineNavigation'].find('.prev').addClass('inactive') : timelineComponents['timelineNavigation'].find('.prev').removeClass('inactive');
+		(value == totWidth ) ?
+		timelineComponents['timelineNavigation'].find('.next').addClass('inactive')
+		:
+        timelineComponents['timelineNavigation'].find('.next').removeClass('inactive');
+*/
+	}
+
+	function updateFilling(selectedEvent, filling, totWidth) {
+		//change .filling-line length according to the selected event
+		var eventStyle = window.getComputedStyle(selectedEvent.get(0), null),
+			eventLeft = eventStyle.getPropertyValue("left"),
+			eventWidth = eventStyle.getPropertyValue("width");
+		eventLeft = Number(eventLeft.replace('px', '')) + Number(eventWidth.replace('px', ''))/2;
+		var scaleValue = eventLeft/totWidth;
+		setTransformValue(filling.get(0), 'scaleX', scaleValue);
+	}
+
+
+
+	function setDatePosition(timelineComponents, min) {
+        var num_events = timelineComponents['timelineDates'].length;
+        var raw_left_vals = [];
+		for (i = 0; i < num_events; i++) { 
+		    var distance = daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][i]),
+		    	distanceNorm = Math.round(distance/timelineComponents['eventsMinLapse']) + 2;
+            var final = (distanceNorm*min) + forcedLeftSubtract;
+            raw_left_vals.push(final);
+		}
+
+        // Now we want to re-process all coordinates to move closer together any successive
+        // events whose dist-between exceeds a given max.
+        var prev_raw_left = 0;
+        var prev_good_left = 0;
+		for (i = 0; i < num_events; i++) {
+            var cur_raw_left = raw_left_vals[i];
+            var delta = Math.min(cur_raw_left-prev_raw_left, eventsMaxDistance);
+            var cur_good_left = prev_good_left + delta;
+		    timelineComponents['timelineEvents'].eq(i).css('left', cur_good_left+'px');
+            prev_raw_left = cur_raw_left;
+            prev_good_left = cur_good_left;
+        }
+	}
+
+
+
+	function setTimelineWidth(timelineComponents, width) {
+		var timeSpan = daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][timelineComponents['timelineDates'].length-1]),
+			timeSpanNorm = timeSpan/timelineComponents['eventsMinLapse'],
+			timeSpanNorm = Math.round(timeSpanNorm) + 4,
+			totalWidth = timeSpanNorm*width;
+		timelineComponents['eventsWrapper'].css('width', totalWidth+'px');
+		updateFilling(timelineComponents['eventsWrapper'].find('a.selected'), timelineComponents['fillingLine'], totalWidth);
+		updateTimelinePosition('next', timelineComponents['eventsWrapper'].find('a.selected'), timelineComponents);
+	    
+		return totalWidth;
+	}
+
+	function updateVisibleContent(event, eventsContent) {
+		var eventDate = event.data('date'),
+			visibleContent = eventsContent.find('.selected'),
+			selectedContent = eventsContent.find('[data-date="'+ eventDate +'"]'),
+			selectedContentHeight = selectedContent.height();
+
+		if (selectedContent.index() > visibleContent.index()) {
+			var classEnetering = 'selected enter-right',
+				classLeaving = 'leave-left';
+		} else {
+			var classEnetering = 'selected enter-left',
+				classLeaving = 'leave-right';
+		}
+
+		selectedContent.attr('class', classEnetering);
+		visibleContent.attr('class', classLeaving).one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(){
+			visibleContent.removeClass('leave-right leave-left');
+			selectedContent.removeClass('enter-left enter-right');
+		});
+		eventsContent.css('height', selectedContentHeight+'px');
+	}
+
+	function updateOlderEvents(event) {
+		event.parent('li').prevAll('li').children('a').addClass('older-event').end().end().nextAll('li').children('a').removeClass('older-event');
+	}
+
+	function getTranslateValue(timeline) {
+		var timelineStyle = window.getComputedStyle(timeline.get(0), null),
+			timelineTranslate = timelineStyle.getPropertyValue("-webkit-transform") ||
+         	timelineStyle.getPropertyValue("-moz-transform") ||
+         	timelineStyle.getPropertyValue("-ms-transform") ||
+         	timelineStyle.getPropertyValue("-o-transform") ||
+         	timelineStyle.getPropertyValue("transform");
+
+        if( timelineTranslate.indexOf('(') >=0 ) {
+        	var timelineTranslate = timelineTranslate.split('(')[1];
+    		timelineTranslate = timelineTranslate.split(')')[0];
+    		timelineTranslate = timelineTranslate.split(',');
+    		var translateValue = timelineTranslate[4];
+        } else {
+        	var translateValue = 0;
+        }
+
+        return Number(translateValue);
+	}
+
+	function setTransformValue(element, property, value) {
+		element.style["-webkit-transform"] = property+"("+value+")";
+		element.style["-moz-transform"] = property+"("+value+")";
+		element.style["-ms-transform"] = property+"("+value+")";
+		element.style["-o-transform"] = property+"("+value+")";
+		element.style["transform"] = property+"("+value+")";
+	}
+
+	//based on http://stackoverflow.com/questions/542938/how-do-i-get-the-number-of-days-between-two-dates-in-javascript
+	function parseDate(events) {
+		var dateArrays = [];
+		events.each(function(){
+			var singleDate = $(this),
+				dateComp = singleDate.data('date').split('T');
+			if( dateComp.length > 1 ) { //both DD/MM/YEAR and time are provided
+				var dayComp = dateComp[0].split('/'),
+					timeComp = dateComp[1].split(':');
+			} else if( dateComp[0].indexOf(':') >=0 ) { //only time is provide
+				var dayComp = ["2000", "0", "0"],
+					timeComp = dateComp[0].split(':');
+			} else { //only DD/MM/YEAR
+				var dayComp = dateComp[0].split('/'),
+					timeComp = ["0", "0"];
+			}
+			var	newDate = new Date(dayComp[2], dayComp[1]-1, dayComp[0], timeComp[0], timeComp[1]);
+			dateArrays.push(newDate);
+		});
+	    return dateArrays;
+	}
+
+	function daydiff(first, second) {
+	    return Math.round((second-first));
+	}
+
+	function minLapse(dates) {
+		//determine the minimum distance among events
+		var dateDistances = [];
+		for (i = 1; i < dates.length; i++) { 
+		    var distance = daydiff(dates[i-1], dates[i]);
+		    dateDistances.push(distance);
+		}
+		return Math.min.apply(null, dateDistances);
+	}
+
+	/*
+	  How to tell if a DOM element is visible in the current viewport?
+	  http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
+	*/
+	function elementInViewport(el) {
+		var top = el.offsetTop;
+		var left = el.offsetLeft;
+		var width = el.offsetWidth;
+		var height = el.offsetHeight;
+
+		while(el.offsetParent) {
+		    el = el.offsetParent;
+		    top += el.offsetTop;
+		    left += el.offsetLeft;
+		}
+
+		return (
+		    top < (window.pageYOffset + window.innerHeight) &&
+		        left < (window.pageXOffset + window.innerWidth) &&
+		        (top + height) > window.pageYOffset &&
+		        (left + width) > window.pageXOffset
+		);
+	}
+
+	function checkMQ() {
+		//check if mobile or desktop device
+		return window.getComputedStyle(document.querySelector('.cd-horizontal-timeline'), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
+	}
+});
+</script>
+</body>
+</html>

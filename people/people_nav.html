@@ -1,8 +1,11 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>16 in 2016</title>
+
+<!-- Version Sunday 7:35pm -->
 
 <style type="text/css">
 body, td, th {
@@ -139,6 +142,13 @@ display: inline-block;
   }
 }
 
+@media screen and (max-width: 330px) {
+  .art img {
+     width: 35px;
+     height: 42px;
+  }
+}
+
 #title {
 text-align: left;
 padding: 2px;
@@ -201,37 +211,37 @@ function swtch(num, this_anchor) {
 jQuery(document).ready(function($){
     imgsrc = new Array();
     imgsrc[0] = "images/people_alexandra_chalupa_a.jpg";
-    imgsrc[1] = "images/people_alexandra_chalupa_b.jpg";
+    imgsrc[1] = "images/people_alexandra_chalupa_c.jpg";
     imgsrc[2] = "images/people_khiz_khan_a.jpg";
-    imgsrc[3] = "images/people_khiz_khan_b.jpg";
+    imgsrc[3] = "images/people_khiz_khan_c.jpg";
     imgsrc[4] = "images/people_karla_ortiz_a.jpg";
-    imgsrc[5] = "images/people_karla_ortiz_b.jpg";
+    imgsrc[5] = "images/people_karla_ortiz_c.jpg";
     imgsrc[6] = "images/people_mark_burns_a.jpg";
-    imgsrc[7] = "images/people_mark_burns_b.jpg";
+    imgsrc[7] = "images/people_mark_burns_c.jpg";
     imgsrc[8] = "images/people_bo_copley_a.jpg";
-    imgsrc[9] = "images/people_bo_copley_b.jpg";
+    imgsrc[9] = "images/people_bo_copley_c.jpg";
     imgsrc[10] = "images/people_pat_smith_a.jpg";
-    imgsrc[11] = "images/people_pat_smith_b.jpg";
+    imgsrc[11] = "images/people_pat_smith_c.jpg";
     imgsrc[12] = "images/people_harold_bornstein_a.jpg";
-    imgsrc[13] = "images/people_harold_bornstein_b.jpg";
+    imgsrc[13] = "images/people_harold_bornstein_c.jpg";
     imgsrc[14] = "images/people_jd_vance_a.jpg";
-    imgsrc[15] = "images/people_jd_vance_b.jpg";
+    imgsrc[15] = "images/people_jd_vance_c.jpg";
     imgsrc[16] = "images/people_gonzalo_curiel_a.jpg";
-    imgsrc[17] = "images/people_gonzalo_curiel_b.jpg";
+    imgsrc[17] = "images/people_gonzalo_curiel_c.jpg";
     imgsrc[18] = "images/people_serge_kovaleski_a.jpg";
-    imgsrc[19] = "images/people_serge_kovaleski_b.jpg";
+    imgsrc[19] = "images/people_serge_kovaleski_c.jpg";
     imgsrc[20] = "images/people_ghazala_khan_a.jpg";
-    imgsrc[21] = "images/people_ghazala_khan_b.jpg";
+    imgsrc[21] = "images/people_ghazala_khan_c.jpg";
     imgsrc[22] = "images/people_katie_packer_a.jpg";
-    imgsrc[23] = "images/people_katie_packer_b.jpg";
+    imgsrc[23] = "images/people_katie_packer_c.jpg";
     imgsrc[24] = "images/people_julius_jones_a.jpg";
-    imgsrc[25] = "images/people_julius_jones_b.jpg";
+    imgsrc[25] = "images/people_julius_jones_c.jpg";
     imgsrc[26] = "images/people_liz_sullivan_a.jpg";
-    imgsrc[27] = "images/people_liz_sullivan_b.jpg";
+    imgsrc[27] = "images/people_liz_sullivan_c.jpg";
     imgsrc[28] = "images/people_jim_steinle_a.jpg";
-    imgsrc[29] = "images/people_jim_steinle_b.jpg";
+    imgsrc[29] = "images/people_jim_steinle_c.jpg";
     imgsrc[30] = "images/people_bernie_bro_a.jpg";
-    imgsrc[31] = "images/people_bernie_bro_b.jpg";
+    imgsrc[31] = "images/people_bernie_bro_c.jpg";
 
 
     // ADDED 20-OCT-2016 BY DFSKLARD: pre-highlight a specific one of the images
@@ -252,7 +262,7 @@ jQuery(document).ready(function($){
             for (i = 0; i < imgsrc.length; i++) {
                 if (imgsrc[i].indexOf(highlight_this_person) >= 0) {
                     imgsrc[i] = imgsrc[i].replace('_a.jpg', '_c.jpg');
-                    imgsrc[i] = imgsrc[i].replace('_b.jpg', '_c.jpg');
+                    imgsrc[i] = imgsrc[i].replace('_c.jpg', '_c.jpg');
                     $('#'+highlight_this_person).find('img').attr('src', imgsrc[i]);
                 }
             }
@@ -295,21 +305,21 @@ jQuery(document).ready(function($){
 
 <div class="art"> 
 
-<div id="alexandra_chalupa"><a href="javascript:doSomeStuff('50')" onMouseOver="swtch('1', this)" onMouseOut="swtch('0',this)"><img src="images/people_alexandra_chalupa_a.jpg" name="test" alt="Alexandra Chalupa" /></a></div> 
+<div id="alexandra_chalupa"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-alexandra-chalupa-171541199.html" target="_top" onMouseOver="swtch('1', this)" onMouseOut="swtch('0',this)"><img src="images/people_alexandra_chalupa_a.jpg" name="test" alt="Alexandra Chalupa" /></a></div> 
 
-<div id="khiz_khan"><a href="javascript:doSomeStuff('51')" onMouseOver="swtch('3', this)" onMouseOut="swtch('2',this)"><img src="images/people_khiz_khan_a.jpg" name="test2" alt="Khizr Khan" /></a></div> 
+<div id="khiz_khan"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-khizr-and-ghazala-khan-172806029.html" target="_top" onMouseOver="swtch('3', this)" onMouseOut="swtch('2',this)"><img src="images/people_khiz_khan_a.jpg" name="test2" alt="Khizr Khan" /></a></div> 
 
-<div id="ghazala_khan"><a href="javascript:doSomeStuff('60')" onMouseOver="swtch('21', this)" onMouseOut="swtch('20',this)"><img src="images/people_ghazala_khan_a.jpg" name="test11" alt="Ghazala Khan" /></a></div>
+<div id="ghazala_khan"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-khizr-and-ghazala-khan-172806029.html" target="_top" onMouseOver="swtch('21', this)" onMouseOut="swtch('20',this)"><img src="images/people_ghazala_khan_a.jpg" name="test11" alt="Ghazala Khan" /></a></div>
 
-<div id="karla_ortiz"><a href="javascript:doSomeStuff('52')" onMouseOver="swtch('5', this)" onMouseOut="swtch('4',this)"><img src="images/people_karla_ortiz_a.jpg" name="test3" alt="Karla Ortiz" /></a></div>
+<div id="karla_ortiz"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-karla-ortiz-170837089.html" target="_top" onMouseOver="swtch('5', this)" onMouseOut="swtch('4',this)"><img src="images/people_karla_ortiz_a.jpg" name="test3" alt="Karla Ortiz" /></a></div>
  
-<div id="mark_burns" ><a href="javascript:doSomeStuff('53')" onMouseOver="swtch('7', this)" onMouseOut="swtch('6',this)"><img src="images/people_mark_burns_a.jpg" name="test4" alt="Mark Burns" /></a></div> 
+<div id="mark_burns"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-pastor-mark-burns-171839357.html" target="_top" onMouseOver="swtch('7', this)" onMouseOut="swtch('6',this)"><img src="images/people_mark_burns_a.jpg" name="test4" alt="Mark Burns" /></a></div> 
 
-<div id="bo_copley" ><a href="javascript:doSomeStuff('54')" onMouseOver="swtch('9', this)" onMouseOut="swtch('8',this)"><img src="images/people_bo_copley_a.jpg" name="test5" alt="Bo Copley" /></a></div> 
+<div id="bo_copley"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-bo-copley-172557534.html" target="_top" onMouseOver="swtch('9', this)" onMouseOut="swtch('8',this)"><img src="images/people_bo_copley_a.jpg" name="test5" alt="Bo Copley" /></a></div> 
 
-<div id="pat_smith" ><a href="javascript:doSomeStuff('55')" onMouseOver="swtch('11', this)" onMouseOut="swtch('10',this)"><img src="images/people_pat_smith_a.jpg" name="test6" alt="Pat Smith" /></a></div>
+<div id="pat_smith"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-pat-smith-172346450.html" target="_top" onMouseOver="swtch('11', this)" onMouseOut="swtch('10',this)"><img src="images/people_pat_smith_a.jpg" name="test6" alt="Pat Smith" /></a></div>
 
-<div id="harold_bornstein" ><a href="javascript:doSomeStuff('56')" onMouseOver="swtch('13', this)" onMouseOut="swtch('12',this)"><img src="images/people_harold_bornstein_a.jpg" name="test7" alt="Harold Bornstein" /></a></div>
+<div id="harold_bornstein"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-dr-harold-bornstein-173045082.html" target="_top" onMouseOver="swtch('13', this)" onMouseOut="swtch('12',this)"><img src="images/people_harold_bornstein_a.jpg" name="test7" alt="Harold Bornstein" /></a></div>
 
 </div>
 
@@ -317,21 +327,21 @@ jQuery(document).ready(function($){
 
 <div class="art"> 
 
-<div id="jd_vance" ><a href="javascript:doSomeStuff('57')" onMouseOver="swtch('15', this)" onMouseOut="swtch('14',this)"><img src="images/people_jd_vance_a.jpg" name="test8" alt="J.D. Vance" /></a></div>
+<div id="jd_vance"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-j-d-vance-173319343.html" target="_top" onMouseOver="swtch('15', this)" onMouseOut="swtch('14',this)"><img src="images/people_jd_vance_a.jpg" name="test8" alt="J.D. Vance" /></a></div>
 
-<div id="gonzalo_curiel" ><a href="javascript:doSomeStuff('58')" onMouseOver="swtch('17', this)" onMouseOut="swtch('16',this)"><img src="images/people_gonzalo_curiel_a.jpg" name="test9" alt="Gonzalo Curiel" /></a></div>
+<div id="gonzalo_curiel"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-judge-gonzalo-curiel-173455196.html" target="_top" onMouseOver="swtch('17', this)" onMouseOut="swtch('16',this)"><img src="images/people_gonzalo_curiel_a.jpg" name="test9" alt="Gonzalo Curiel" /></a></div>
 
-<div id="serge_kovaleski" ><a href="javascript:doSomeStuff('59')" onMouseOver="swtch('19', this)" onMouseOut="swtch('18',this)"><img src="images/people_serge_kovaleski_a.jpg" name="test10" alt="Serge Kovaleski" /></a></div>
+<div id="serge_kovaleski"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-serge-kovaleski-173707735.html" target="_top" onMouseOver="swtch('19', this)" onMouseOut="swtch('18',this)"><img src="images/people_serge_kovaleski_a.jpg" name="test10" alt="Serge Kovaleski" /></a></div>
 
-<div id="katie_packer" ><a href="javascript:doSomeStuff('61')" onMouseOver="swtch('23', this)" onMouseOut="swtch('22',this)"><img src="images/people_katie_packer_a.jpg" name="test12" alt="Katie Packer" /></a></div>
+<div id="katie_packer"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-katie-packer-173856973.html" target="_top" onMouseOver="swtch('23', this)" onMouseOut="swtch('22',this)"><img src="images/people_katie_packer_a.jpg" name="test12" alt="Katie Packer" /></a></div>
 
-<div id="julius_jones" ><a href="javascript:doSomeStuff('62')" onMouseOver="swtch('25', this)" onMouseOut="swtch('24',this)"><img src="images/people_julius_jones_a.jpg" name="test13" alt="Julius Jones" /></a></div>
+<div id="julius_jones"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-julius-jones-171259079.html" target="_top" onMouseOver="swtch('25', this)" onMouseOut="swtch('24',this)"><img src="images/people_julius_jones_a.jpg" name="test13" alt="Julius Jones" /></a></div>
 
-<div id="liz_sullivan" ><a href="javascript:doSomeStuff('63')" onMouseOver="swtch('27', this)" onMouseOut="swtch('26',this)"><img src="images/people_liz_sullivan_a.jpg" name="test14" alt="Liz Sullivan and Jim Steinle" /></a></div>
+<div id="liz_sullivan"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-liz-sullivan-and-jim-steinle-173856019.html" target="_top" onMouseOver="swtch('27', this)" onMouseOut="swtch('26',this)"><img src="images/people_liz_sullivan_a.jpg" name="test14" alt="Liz Sullivan" /></a></div>
 
-<div id="jim_steinle" ><a href="javascript:doSomeStuff('64')" onMouseOver="swtch('29', this)" onMouseOut="swtch('28',this)"><img src="images/people_jim_steinle_a.jpg" name="test15" alt="David French" /></a></div>
+<div id="jim_steinle"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-liz-sullivan-and-jim-steinle-173856019.html" target="_top" onMouseOver="swtch('29', this)" onMouseOut="swtch('28',this)"><img src="images/people_jim_steinle_a.jpg" name="test15" alt="Jim Stenle" /></a></div>
 
-<div id="bernie_bro" ><a href="javascript:doSomeStuff('65')" onMouseOver="swtch('31', this)" onMouseOut="swtch('30',this)"><img src="images/people_bernie_bro_a.jpg" name="test16" alt="Bernie bro" /></a></div>
+<div id="bernie_bro"><a href="https://www.yahoo.com/news/16-people-who-shaped-the-2016-election-isaac-saul-175336283.html" target="_top" onMouseOver="swtch('31', this)" onMouseOut="swtch('30',this)"><img src="images/people_bernie_bro_a.jpg" name="test16" alt="Issac Saul" /></a></div>
 
 </div>
 
