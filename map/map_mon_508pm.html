@@ -13,9 +13,9 @@
       }
 
       .side {
-         padding: 18px;
+         padding: 20px;
          font-family: Arial;
-         font-size: 18px;
+         font-size: 19px;
          display: inline-block;
          }
     </style>
@@ -146,7 +146,7 @@
       var isTouch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
       var w = $(window).width();
     
-      if (isTouch && (w < 900)) {
+      if (isTouch && (w < 1200)) {
         $('#links-textual').removeClass('hidden');
         return;
       }
