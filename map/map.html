@@ -8,6 +8,10 @@
          display: none;
       }
 
+      body {
+         margin: 0px;
+      }
+
       .side {
          padding: 10px;
          font-family: Arial;
@@ -104,11 +108,13 @@
 
 
     <div class='map'>
-      <img id=278 src='map_usa_16_2016_278.png' usemap='#278_map' class='hidden'/>
-      <img id=370 src='map_usa_16_2016_370.png' usemap='#370_map' class='hidden'/>
-      <img id=520 src='map_usa_16_2016_520.png' usemap='#520_map' class='hidden'/>
-      <img id=680 src='map_usa_16_2016_680.png' usemap='#680_map' class='hidden'/>
+      <img id=278 nosrc='map_usa_16_2016_278.png' usemap='#278_map' class='hidden'/>
+      <img id=370 nosrc='map_usa_16_2016_370.png' usemap='#370_map' class='hidden'/>
+      <img id=520 nosrc='map_usa_16_2016_520.png' usemap='#520_map' class='hidden'/>
+      <img id=680 nosrc='map_usa_16_2016_680.png' usemap='#680_map' class='hidden'/>
     </div>
+
+
 
     <div id='links-textual' class='hidden'>
     <div class='side'>
@@ -117,14 +123,14 @@
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-charleston-s-c-185535788.html" target="_top" alt="Charleston" >Charleston</a></div>
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-youngstown-ohio-175939771.html" target="_top" alt="Youngstown" >Youngstown</a></div>
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-new-york-n-y-171421811.html" target="_top" alt="New York" >New York</a></div>
-      <div class='link'><a 31,60,634,112,656,60,662,60,661,38,569,38" href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-manchester-n-h-172027624.html" target="_top" alt="Manchester" >Manchester</a></div>
+      <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-manchester-n-h-172027624.html" target="_top" alt="Manchester" >Manchester</a></div>
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-burlington-vt-173516746.html" target="_top" alt="Burlington" >Burlington</a></div>
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-flint-mich-2-202136109.html" target="_top" alt="Flint" >Flint</a></div>
     </div>
     <div class='side'>
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-chicago-ill-175526500.html" target="_top" alt="Chicago" >Chicago</a></div>
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-san-bernardino-calif-2-203258891.html" target="_top" alt="San Bernardino" >San Bernardino</a></div>
-      <div class='link'><a 97,382,397,407,494,405,494,384,440,383,421,364" href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-baton-rouge-la-192453265.html" target="_top" alt="Baton Rouge">Baton Rouge</a></div>
+      <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-baton-rouge-la-192453265.html" target="_top" alt="Baton Rouge">Baton Rouge</a></div>
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-laredo-texas-194110323.html" target="_top" alt="Laredo" >Laredo</a></div>
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-indianapolis-ind-173140123.html" target="_top" alt="Indianapolis" >Indianapolis</a></div>
       <div class='link'><a href="https://www.yahoo.com/news/16-places-that-shaped-the-2016-election-moscow-russia-172833289.html" target="_top" alt="Moscow" >Moscow, Russia</a></div>
@@ -137,7 +143,6 @@
 
     <script>
 
-
       jQuery(document).ready(function($){
 
       var isTouch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
@@ -147,20 +152,26 @@
         return;
       }
 
+      function enable_map(id) {
+         $('img').addClass('hidden');
+         $('#'+id).attr('src', 'map_usa_16_2016_'+id+'.png');
+         $('#'+id).removeClass('hidden');
+      }
+      
       var handle_resize = function() {
       var w = $(window).width();
       $('img').addClass('hidden');
-      if (w >= 620) {
-      $('#680').removeClass('hidden');
+      if (w > 680) {
+         enable_map(680);
       }
-      else if (w >= 520) {
-      $('#520').removeClass('hidden');
+      else if (w > 520) {
+         enable_map(520);
       }
-      else if (w >= 370) {
-      $('#370').removeClass('hidden');
+      else if (w > 370) {
+         enable_map(370);
       }
       else {
-      $('#278').removeClass('hidden');
+         enable_map(278);
       }
       };
 
