@@ -145,11 +145,15 @@
 
       var isTouch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
       var w = $(window).width();
-    
+
+      isTouch = '';
+
+/*
       if (isTouch && (w < 1200)) {
         $('#links-textual').removeClass('hidden');
         return;
       }
+*/
 
       function enable_map(id) {
          $('img').addClass('hidden');
